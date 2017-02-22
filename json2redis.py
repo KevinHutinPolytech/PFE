@@ -8,9 +8,11 @@ filename = sys.argv[1]
 with open(filename, 'r') as f:
     try :
         tweet = json.loads(line)
+        print('tweet')
         date = json.dumps(tweet['created_at'])
         basejson.hset(filename,date,tweet)
     except:
+        print('failed try')
         pass
 print(basejson.hscan(filename))
 
