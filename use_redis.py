@@ -2,7 +2,7 @@
 
 import redis
 
-client = redis.StrictRedis(host='127.0.0.1',port=6379,db=0,password='password')
+client = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
 
 client.set('key','b')
 print(client.get('key'))
