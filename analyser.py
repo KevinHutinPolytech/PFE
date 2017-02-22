@@ -63,7 +63,7 @@ count = 0
 punctuation = list(string.punctuation)
 stop = stopwords.words('french') + punctuation + ['via','le','les','a'] # Liste des tokens à effacer
 
-with open('Stream_Macron.json', 'r') as f:
+with open('stream_Macron.json', 'r') as f:
     count_all = Counter() # Inisialise un compteur
     count_stop = Counter() # Inisialise un compteur
     count_bi = Counter() # Inisialise un compteur
