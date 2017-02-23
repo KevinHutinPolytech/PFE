@@ -27,7 +27,7 @@ def getTweetText(tweet):
     return text
 
 def redis2json(hashname, database):
-    jsonfile = database.hgetall(hashname)
+    jsonfile = database.hvals(hashname)
     return jsonfile
 
 def json2tweet(line):
