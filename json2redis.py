@@ -44,8 +44,9 @@ listTweet = basejson.hvals(filename)
 print(listTweet[1])
 print(type(listTweet[1]))
 print(type(json.loads(listTweet[1])))
-print(listTweet[1]['text'])
-print(type(listTweet))
+tweetdict = json.loads(listTweet[1])
+print(tweetdict['text'])
+
 ##
 ##
 ##print(file)
