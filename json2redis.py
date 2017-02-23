@@ -38,7 +38,7 @@ print(file[1])
 print('/n')
 print('/n')
 
-tweet = json.loads(file['1'])
+tweet = json.loads(file[1])
 print(json.dumps(tweet['text']))
 
 basejson.set(filename,file)
@@ -51,6 +51,8 @@ pyObject = json.loads(s)
 basejson.set(filename,pyObject)
 '''
 file = basejson.get(filename)
+tweet = json.loads(file[1])
+print(json.dumps(tweet['text']))
 
 for line in file:
     print('line')
