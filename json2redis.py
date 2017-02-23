@@ -13,31 +13,37 @@ filename = sys.argv[1]
 #filename = 'stream__Macron.json'
 
 #### VERSION 1
-'''with open(filename, 'r') as f:
+count = 0
+file = {}
+with open(filename, 'r') as f:
     for line in f:
         m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
         if m != None :
-            try :                
-                tweet = json.loads(line)
-                date = json.dumps(tweet['created_at'])
-                basejson.hset(filename,date,tweet)
+            try :
+                count = count + 1
+                countstr = '%s'  %count
+                file[countstr] = line
+               # tweet = json.loads(line)
+               # date = json.dumps(tweet['created_at'])
+                
             except:
                 print('failed try')
                 pass
-print(basejson.hscan(filename))
-
+#print(basejson.hscan(file))
+print(file['1'])
+print(file['1']['text'])
+basejson.set(filename,file)
+print(basejson.get(filename))
 '''
-
 #### Version 2
 f=open(filename,'r')
-
-pyObject = json.load(f)
-print(type(pyObject))
+s=f.read()
+pyObject = json.loads(s)
 basejson.set(filename,pyObject)
+'''
+file = basejson.get(filename)
 
-listTweet = basejson.get(filename)
-
-for line in listTweet:
+for line in file:
     print('line')
     print (line)
     tweetText= json.dumps(line['text'])
