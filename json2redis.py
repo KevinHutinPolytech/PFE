@@ -52,7 +52,7 @@ basejson.set(filename,pyObject)
 '''
 file = basejson.get(filename)
 print(type(file))
-tweet = json.loads(file[1])
+tweet = json.loads(file)
 print(tweet)
 print(type(tweet))
 print(json.dumps(tweet['text']))
