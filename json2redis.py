@@ -14,20 +14,30 @@ filename = sys.argv[1]
 
 #### VERSION 1
 count = 0
-with open(filename, 'r') as f:
+with open("presidentielle.json", 'r') as f:
     for line in f:
         m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
         if m != None :
             try :
                 count = count + 1
-                tweet = json.loads(line)
-                basejson.hset(filename,tweet['id'],tweet)
-               # tweet = json.loads(line)
-               # date = json.dumps(tweet['created_at'])
-                print('ok')
+                if (count <= 3) :
+                    print(count)
+                    tweet = json.loads(line)
+                    print(type(tweet))
+                    print(tweet)
+                    print(tweet.keys())
+                    print(tweet['id_str'])
+                    print(tweet['text'])                    
+                    
+                   # tweetid = json.dumps(tweet('id'))
+                   # basejson.hset(filename,count,tweet)
+                   # tweet = json.loads(line)
+                   # date = json.dumps(tweet['created_at'])
+                    print('ok')
             except:
                 print('failed try')
                 pass
+            basejson.hset(filename,tweet['id_str'],tweet)
 #print(basejson.hscan(file))
 
 listTweet = basejson.hvals(filename)
