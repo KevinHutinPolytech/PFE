@@ -24,7 +24,7 @@ def json2redis(filename,database):
 def getTweetText(tweet):
     print('getTweetText')
     #tweet = json.loads(tweet)
-    text = json.dumps(tweet['text']) # récupere le texte du tweet
+    text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
     return text
 
 def redis2json(hashname, database):
