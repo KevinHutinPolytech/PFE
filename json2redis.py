@@ -20,9 +20,9 @@ with open(filename, 'r') as f:
         if m != None :
             try :
                 count = count + 1
-               # tweet = json.loads(line)
+                tweet = json.loads(line)
                # tweetid = json.dumps(tweet('id'))
-                basejson.hset(filename,count,line)
+                basejson.hset(filename,count,tweet)
                # tweet = json.loads(line)
                # date = json.dumps(tweet['created_at'])
                 print('ok')
