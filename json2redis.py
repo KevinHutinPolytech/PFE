@@ -13,16 +13,16 @@ filename = sys.argv[1]
 #filename = 'stream__Macron.json'
 
 #### VERSION 1
-count = 0
-file = {}
+
 with open(filename, 'r') as f:
     for line in f:
         m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
         if m != None :
             try :
-                count = count + 1
-                countstr = '%s'  %count
-                file[count] = line
+                
+                tweet = json.loads(line)
+                tweetid = json.dumps(tweet('id'))
+                basejson.hset(filename,tweetid,line)
                # tweet = json.loads(line)
                # date = json.dumps(tweet['created_at'])
                 
@@ -30,37 +30,42 @@ with open(filename, 'r') as f:
                 print('failed try')
                 pass
 #print(basejson.hscan(file))
-print(file)
-print('/n')
-print('/n')
-
-print(file[1])
-print('/n')
-print('/n')
-
-tweet = json.loads(file[1])
-print(json.dumps(tweet['text']))
-
-basejson.set(filename,file)
-print(basejson.get(filename))
-'''
-#### Version 2
-f=open(filename,'r')
-s=f.read()
-pyObject = json.loads(s)
-basejson.set(filename,pyObject)
-'''
-file = basejson.get(filename)
-print(type(file))
-tweet = json.loads(file)
-print(tweet)
-print(type(tweet))
-print(json.dumps(tweet['text']))
-
-for line in file:
-    print('line')
-    print (line)
-    tweetText= json.dumps(line['text'])
-    print('tweetText')
-    print(tweetText)
-    
+listTweet = basejson.hvals(filename)
+print(listTweet)
+print(type(listTweet))
+##
+##
+##print(file)
+##print('/n')
+##print('/n')
+##
+##print(file[1])
+##print('/n')
+##print('/n')
+##
+##
+##print(json.dumps(tweet['text']))
+##
+##basejson.set(filename,file)
+##print(basejson.get(filename))
+##'''
+###### Version 2
+##f=open(filename,'r')
+##s=f.read()
+##pyObject = json.loads(s)
+##basejson.set(filename,pyObject)
+##'''
+##file = basejson.get(filename)
+##print(type(file))
+##tweet = json.loads(file)
+##print(tweet)
+##print(type(tweet))
+##print(json.dumps(tweet['text']))
+##
+##for line in file:
+##    print('line')
+##    print (line)
+##    tweetText= json.dumps(line['text'])
+##    print('tweetText')
+##    print(tweetText)
+##    
