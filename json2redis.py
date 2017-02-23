@@ -37,12 +37,13 @@ with open("presidentielle.json", 'r') as f:
             except:
                 print('failed try')
                 pass
-            basejson.hset(filename,tweet['id_str'],tweet)
+            basejson.hset(filename,tweet['id_str'],json.dumps(tweet))
 #print(basejson.hscan(file))
 
 listTweet = basejson.hvals(filename)
 print(listTweet[1])
 print(type(listTweet[1]))
+print(type(json.loads(listTweet[1])))
 print(listTweet[1]['text'])
 print(type(listTweet))
 ##
