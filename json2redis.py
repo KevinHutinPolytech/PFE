@@ -30,8 +30,8 @@ print(basejson.hscan(filename))
 
 #### Version 2
 f=open(filename,'r')
-s=f.read()
-pyObject = json.loads(s)
+
+pyObject = json.loads(f)
 basejson.set(filename,pyObject)
 
 listTweet = basejson.get(filename)
