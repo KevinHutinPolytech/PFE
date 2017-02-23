@@ -22,6 +22,7 @@ def json2redis(filename,database):
                     pass
 
 def getTweetText(tweet):
+    print('getTweetText')
     text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
     return text
 
@@ -30,6 +31,7 @@ def redis2json(hashname, database):
     return jsonfile
 
 def json2tweet(line):
+    print('json2tweet')
     tweet = json.loads(line)
     return tweet
 
@@ -46,6 +48,8 @@ jsonfile = redis2json(filename,basejson)
 
 for line in jsonfile:
     try:
+        print('line')
+        print(line)
         tweet = json2tweet(line)
         text = getTweetText(tweet)
         print(text)
