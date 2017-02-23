@@ -48,11 +48,11 @@ print(basejson.hgetall(filename))
 jsonfile = redis2json(filename,basejson)
 
 for line in jsonfile:
-    try:
-        print('line')
-        print(line)
-       # tweet = json2tweet(line)
-        text = getTweetText(line)
-        print(text)
-    except:
-        print('failed try 2')
+    
+    print('line')
+    print(line)
+    # tweet = json2tweet(line)
+    text = getTweetText(line)
+    print(text)
+    
+    
