@@ -74,6 +74,8 @@ with open('stream__Macron.json', 'r') as f:
         if m != None :
             try  :
                 tweet = json.loads(line)
+                print('line:')
+                print(line)
                 count = count + 1 # compte le nombre de tweet
                 #print(count)
                           
@@ -89,11 +91,11 @@ with open('stream__Macron.json', 'r') as f:
                 print(json.dumps(tweet['text'],ensure_ascii = False))
            # print('')
             
-                tweet = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
-                tokens = preprocess(tweet) # Tokenise le texte
+                tweettext = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
+                tokens = preprocess(tweettext) # Tokenise le texte
                 
-                terms_all = [term for term in preprocess(tweet)] # Crée une liste avec tout les terms
-                terms_stop = [term for term in preprocess(tweet) if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+                terms_all = [term for term in preprocess(tweettext)] # Crée une liste avec tout les terms
+                terms_stop = [term for term in preprocess(tweettext) if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
                 terms_bigram = bigrams(terms_stop) # Compte les termes les plus fréquent deux à deux 
                 count_all.update(terms_all) # Met à jour le compteur avec les termes en parametres
                 count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
