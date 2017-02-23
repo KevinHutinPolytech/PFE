@@ -21,8 +21,7 @@ with open(filename, 'r') as f:
             try :
                 count = count + 1
                 tweet = json.loads(line)
-               # tweetid = json.dumps(tweet('id'))
-                basejson.hset(filename,count,tweet)
+                basejson.hset(filename,tweet['id'],tweet)
                # tweet = json.loads(line)
                # date = json.dumps(tweet['created_at'])
                 print('ok')
@@ -30,6 +29,7 @@ with open(filename, 'r') as f:
                 print('failed try')
                 pass
 #print(basejson.hscan(file))
+
 listTweet = basejson.hvals(filename)
 print(listTweet)
 print(type(listTweet))
