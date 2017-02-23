@@ -22,7 +22,7 @@ with open(filename, 'r') as f:
             try :
                 count = count + 1
                 countstr = '%s'  %count
-                file[countstr] = line
+                file[count] = line
                # tweet = json.loads(line)
                # date = json.dumps(tweet['created_at'])
                 
@@ -34,7 +34,7 @@ print(file)
 print('/n')
 print('/n')
 
-print(file['1'])
+print(file[1])
 print('/n')
 print('/n')
 
