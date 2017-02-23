@@ -50,8 +50,8 @@ for line in jsonfile:
     try:
         print('line')
         print(line)
-        tweet = json2tweet(line)
-        text = getTweetText(tweet)
+       # tweet = json2tweet(line)
+        text = getTweetText(line)
         print(text)
     except:
         print('failed try 2')
