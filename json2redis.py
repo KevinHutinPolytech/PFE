@@ -51,7 +51,10 @@ pyObject = json.loads(s)
 basejson.set(filename,pyObject)
 '''
 file = basejson.get(filename)
+print(type(file))
 tweet = json.loads(file[1])
+print(tweet)
+print(type(tweet))
 print(json.dumps(tweet['text']))
 
 for line in file:
