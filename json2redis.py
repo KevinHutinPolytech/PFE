@@ -11,7 +11,9 @@ basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
 print(sys.argv[1])
 filename = sys.argv[1]
 #filename = 'stream__Macron.json'
-with open(filename, 'r') as f:
+
+#### VERSION 1
+'''with open(filename, 'r') as f:
     for line in f:
         m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
         if m != None :
@@ -24,4 +26,20 @@ with open(filename, 'r') as f:
                 pass
 print(basejson.hscan(filename))
 
+'''
 
+#### Version 2
+f=open(filename,'r')
+s=f.read()
+pyObject = json.loads(s)
+basejson.set(filename,pyObject)
+
+listTweet = basejson.get(filename)
+
+for line in listTweet:
+    print('line')
+    print (line)
+    tweetText= json.dumps(line['text'])
+    print('tweetText')
+    print(tweetText)
+    
