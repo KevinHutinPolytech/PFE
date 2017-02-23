@@ -30,8 +30,17 @@ with open(filename, 'r') as f:
                 print('failed try')
                 pass
 #print(basejson.hscan(file))
+print(file)
+print('/n')
+print('/n')
+
 print(file['1'])
-print(file['1']['text'])
+print('/n')
+print('/n')
+
+tweet = json.loads(file['1'])
+print(json.dumps(tweet['text']))
+
 basejson.set(filename,file)
 print(basejson.get(filename))
 '''
