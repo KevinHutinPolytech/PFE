@@ -41,7 +41,9 @@ with open("presidentielle.json", 'r') as f:
 #print(basejson.hscan(file))
 
 listTweet = basejson.hvals(filename)
-print(listTweet)
+print(listTweet[1])
+print(type(listTweet[1]))
+print(listTweet[1]['text'])
 print(type(listTweet))
 ##
 ##
