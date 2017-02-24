@@ -18,6 +18,7 @@ from nltk.corpus import stopwords
 import string
 from nltk import bigrams 
 from unidecode import unidecode
+from nltk.stem.snowball import SnowballStemmer
 
 def tokenize(s):
     return tokens_re.findall(s)
@@ -68,7 +69,7 @@ regex_str = [
     
 tokens_re = re.compile(r'('+'|'.join(regex_str)+')', re.VERBOSE | re.IGNORECASE)
 emoticon_re = re.compile(r'^'+emoticons_str+'$', re.VERBOSE | re.IGNORECASE)
-
+stemmer = SnowballStemmer("french")
 """
 The regular expressions are compiled with the flags re.VERBOSE, to allow spaces in the regexp to be ignored (see the multi-line emoticons regexp),
 and re.IGNORECASE to catch both upper and lowercases. The tokenize() function simply catches all the tokens in a string and returns them as a list.
@@ -82,14 +83,22 @@ listOfTweets = getTweetsByHash("presidentielle.json",database)
 punctuation = list(string.punctuation)
 stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
+stemmer = SnowballStemmer("french")
+
 count_stop = Counter() # Inisialise un compteur
 for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
         print(tweetText)
         tokens = preprocess(tweetText) # Tokenise le texte
+        stem = stemmer.stem(tokens)
+        print(stem)
+        print(type(stem))
         terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
-        count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
+        stem = stemmer.stem(terms_stop)
+        print(stem)
+        print(type(stem))
+        count_stop.update(stem) # Met à jour le compteur avec les termes en parametres
         
     except:
         print('fail')
