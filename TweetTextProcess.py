@@ -80,16 +80,23 @@ database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
 listOfTweets = getTweetsByHash("presidentielle.json",database)
 
 punctuation = list(string.punctuation)
-stop = stopwords.words('french') + punctuation + ['via','le','les','a'] # Liste des tokens à effacer
+stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
 count_stop = Counter() # Inisialise un compteur
 for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
         print(tweetText)
+        print(type(tweetText))
         tokens = preprocess(tweetText) # Tokenise le texte
+        print(tokens)
+        print(type(tokens))
         terms_stop = [term for term in preprocess(tweetText) if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+        print(terms_stop)
+        print(type(terms_stop))
         count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
+        print(count_stop)
+        print(type(count_stop))
     except:
         print('fail')
         pass
