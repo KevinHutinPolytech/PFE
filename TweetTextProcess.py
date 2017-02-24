@@ -36,7 +36,8 @@ def getTweetsByHash(filename,database):
 def getTweetText(TweetStr):
     tweetDict = json.loads(TweetStr)
     tweetText = tweetDict['text']
-    return tweetText
+    tweetTextStr = tweetText.encode('utf-8')
+    return tweetTextStr
 
 #######TEST####
 ##database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
@@ -86,13 +87,9 @@ count_stop = Counter() # Inisialise un compteur
 for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
-        print(tweetText)
-        print(type(tweetText))
-        tweetTextstr = ord(tweetText)
-        print(tweetTextstr)
-        print(type(tweetTextstr))
-        tokens = preprocess(tweetTextstr) # Tokenise le texte
-        terms_stop = [term for term in preprocess(tweetText) if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+        
+        tokens = preprocess(tweetText) # Tokenise le texte
+        terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
         count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
         
     except:
