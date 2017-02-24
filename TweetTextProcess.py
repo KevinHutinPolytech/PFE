@@ -79,7 +79,7 @@ print(tweetText)
 ##punctuation = list(string.punctuation)
 ##stop = stopwords.words('french') + punctuation + ['via','le','les','a'] # Liste des tokens à effacer
 
-for tweet in listOfTweets
+for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
         print(tweetText)
