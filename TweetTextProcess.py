@@ -88,7 +88,9 @@ for tweet in listOfTweets:
         tweetText = getTweetText(tweet)
         print(tweetText)
         print(type(tweetText))
-        tweetTextstr = str(tweetText)
+        tweetTextstr = ord(tweetText)
+        print(tweetTextstr)
+        print(type(tweetTextstr))
         tokens = preprocess(tweetTextstr) # Tokenise le texte
         terms_stop = [term for term in preprocess(tweetText) if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
         count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
