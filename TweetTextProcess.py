@@ -17,7 +17,7 @@ import redis
 from nltk.corpus import stopwords
 import string
 from nltk import bigrams 
-
+from unidecode import unidecode
 
 def tokenize(s):
     return tokens_re.findall(s)
@@ -35,9 +35,8 @@ def getTweetsByHash(filename,database):
 
 def getTweetText(TweetStr):
     tweetDict = json.loads(TweetStr)
-    tweetText = tweetDict['text']
-    tweetTextStr = tweetText.encode('utf-8')
-    return tweetTextStr
+    tweetText = unidecode(tweetDict['text'])
+    return tweetText
 
 #######TEST####
 ##database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
@@ -87,7 +86,7 @@ count_stop = Counter() # Inisialise un compteur
 for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
-        
+        print(tweetText)
         tokens = preprocess(tweetText) # Tokenise le texte
         terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
         count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
