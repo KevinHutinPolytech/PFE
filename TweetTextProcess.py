@@ -76,6 +76,9 @@ This function is used within preprocess(), which is used as a pre-processing cha
 tokens that are not emoticons (e.g. :D doesn’t become :d).
 """
 
+database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
+listOfTweets = getTweetsByHash("presidentielle.json",database)
+
 punctuation = list(string.punctuation)
 stop = stopwords.words('french') + punctuation + ['via','le','les','a'] # Liste des tokens à effacer
 
