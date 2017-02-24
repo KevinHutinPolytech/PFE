@@ -85,30 +85,27 @@ stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # L
 
 stemmer = SnowballStemmer("french")
 
-print(stemmer)
-print(type(stemmer))
 count_stop = Counter() # Inisialise un compteur
 for tweet in listOfTweets:
     try:
         tweetText = getTweetText(tweet)
         print(tweetText)
         tokens = preprocess(tweetText) # Tokenise le texte
-        stem = stemmer.stem(tokens)
-        print(stem)
-        print(type(stem))
+        terms_stem = [stemmer.stem(term) for term in tokens ]
+        print(terms_stem)
+        print(type(terms_stem))
         terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
-        stem = stemmer.stem(terms_stop)
-        print(stem)
-        print(type(stem))
+        terms_stem = [stemmer.stem(term) for term in terms_stop ]
+        print(terms_stem)
+        print(type(terms_stem))
         count_stop.update(stem) # Met à jour le compteur avec les termes en parametres
         
     except:
         tweetText = getTweetText(tweet)
-        print(tweetText)
         tokens = preprocess(tweetText) # Tokenise le texte
-        stem = stemmer.stem(tokens)
-        print(stem)
-        print(type(stem))
+        terms_stem = [stemmer.stem(term) for term in tokens ]
+        print(terms_stem)
+        print(type(terms_stem))
         print('fail')
         pass
 
