@@ -43,12 +43,14 @@ class MyListener(StreamListener):
         try:
             with open(self.outfile, 'a') as f:
                 self.count = self.count + 1
+                print(data)
+                print(type(data))
                 f.write(data)
                 print(self.count)
                 return True
         except BaseException as e:
             print("quot;Error on_data: %s&quot;" % str(e))
-        return True
+            return True
  
     def on_error(self, status):
         print(status)
@@ -74,6 +76,13 @@ def convert_valid(one_char):
 
 
 query = sys.argv[1:] # list of CLI arguments
+print(query)
+print(type(query))
+if query == '-h' :
+    print('Passez en paramètre la clé à tracker sur tweeter.')
+    print("Le fichier de sorti s'appellera stream_'lenomdelaclé'")
+    print("(les caractère spéciaux sont convertit en '_' dans le nom de fichier)")
+    
 query_fname = ' '.join(query) # string
 twitter_stream = Stream(auth, MyListener(query_fname))
 twitter_stream.filter(track=query, async=True)
