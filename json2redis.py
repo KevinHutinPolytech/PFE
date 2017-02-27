@@ -17,7 +17,8 @@ with open(filename, 'r') as f:
         m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
         if m != None :
             try :
-                '''count = count + 1
+                count = count + 1
+                '''
                 print(count)
                 print(type(tweet))
                 print(tweet)
@@ -27,9 +28,9 @@ with open(filename, 'r') as f:
                 print('ok')'''
                 tweet = json.loads(line)
                 basejson.hset(filename,tweet['id_str'],json.dumps(tweet))
-                print('ok')
             except:
                 print('failed try')
                 pass
             
 
+print('%s tweets uploads' %(count))
