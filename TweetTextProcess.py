@@ -75,12 +75,12 @@ and re.IGNORECASE to catch both upper and lowercases. The tokenize() function si
 This function is used within preprocess(), which is used as a pre-processing chain: in this case we simply add a lowercasing feature for all the
 tokens that are not emoticons (e.g. :D doesn’t become :d).
 """
-clé = sys.argv[1]
-if clé == '-h' :
+cle = sys.argv[1]
+if cle == '-h' :
     print('passez en argument la clé pour trouver les élément dans la base')
     
 database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
-listOfTweets = getTweetsByHash(clé,database)
+listOfTweets = getTweetsByHash(cle,database)
 
 punctuation = list(string.punctuation)
 stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
