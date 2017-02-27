@@ -69,21 +69,23 @@ regex_str = [
     
 tokens_re = re.compile(r'('+'|'.join(regex_str)+')', re.VERBOSE | re.IGNORECASE)
 emoticon_re = re.compile(r'^'+emoticons_str+'$', re.VERBOSE | re.IGNORECASE)
-stemmer = SnowballStemmer("french")
 """
 The regular expressions are compiled with the flags re.VERBOSE, to allow spaces in the regexp to be ignored (see the multi-line emoticons regexp),
 and re.IGNORECASE to catch both upper and lowercases. The tokenize() function simply catches all the tokens in a string and returns them as a list.
 This function is used within preprocess(), which is used as a pre-processing chain: in this case we simply add a lowercasing feature for all the
 tokens that are not emoticons (e.g. :D doesn’t become :d).
 """
-
+clé = sys.argv[1]
+if clé == '-h' :
+    print('passez en argument la clé pour trouver les élément dans la base')
+    
 database = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
-listOfTweets = getTweetsByHash("presidentielle.json",database)
+listOfTweets = getTweetsByHash(clé,database)
 
 punctuation = list(string.punctuation)
 stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
-stemmer = SnowballStemmer("french")
+stemmer = SnowballStemmer('french')
 
 count_stop = Counter() # Inisialise un compteur
 count_stem = Counter() # Inisialise un compteur
@@ -95,11 +97,13 @@ for tweet in listOfTweets:
         print('tokens')
         print(tokens)
         terms_stem = [stemmer.stem(term) for term in tokens ]
-        print('stem')
+        print('stem sans stop')
         print(terms_stem)
         print(type(terms_stem))
         terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
         terms_stem = [stemmer.stem(term) for term in terms_stop ]
+
+        print('stem avec stop')
         print(terms_stem)
         print(type(terms_stem))
         count_stop.update(terms_stop) # Met à jour le compteur avec les termes en parametres
@@ -108,6 +112,7 @@ for tweet in listOfTweets:
     except:
         print('fail')
         pass
-
+print('stop most common')
 print(count_stop.most_common(40)) # Affiche les 20 mots les plus frequents
+print('stem most common')
 print(count_stem.most_common(40)) # Affiche les 20 mots les plus frequents

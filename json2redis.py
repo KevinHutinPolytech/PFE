@@ -27,6 +27,7 @@ with open(filename, 'r') as f:
                 print('ok')'''
                 tweet = json.loads(line)
                 basejson.hset(filename,tweet['id_str'],json.dumps(tweet))
+                print('ok')
             except:
                 print('failed try')
                 pass
