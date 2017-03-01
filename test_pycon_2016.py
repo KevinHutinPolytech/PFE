@@ -17,7 +17,7 @@ def read_file(file):
 from gensim import corpora
 with open ('stream_StopMacron.json', 'r') as f:
         dictionary = corpora.Dictionary(line.strip().split() for line in read_file(f))
-
+        print(dictionary)
 
 class MyCorpus(object):
     def __iter__(self):
