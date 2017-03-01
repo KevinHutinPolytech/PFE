@@ -26,6 +26,8 @@ class MyCorpus(object):
             print(type(dictionary.doc2bow(line)))
             yield dictionary.doc2bow(line)
 
+corpus = MyCorpus()
+print(corpus)
 from gensim import models
 lda = models.ldamodel.LdaModel(corpus = MyCorpus(), id2word = dictionary, num_topics = 100, update_every = 1, chunksize = 100000, passes = 3)
 print(lda)
