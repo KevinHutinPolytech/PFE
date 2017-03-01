@@ -22,6 +22,8 @@ with open ('stream_StopMacron.json', 'r') as f:
 class MyCorpus(object):
     def __iter__(self):
         for line in read_file(open ('stream_StopMacron.json', 'r')):
+            print(dictionary.doc2bow(line))
+            print(type(dictionary.doc2bow(line)))
             yield dictionary.doc2bow(line)
 
 from gensim import models
