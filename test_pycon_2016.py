@@ -24,7 +24,7 @@ class MyCorpus(object):
         for line in read_file(open ('stream_StopMacron.json', 'r')):
             print(dictionary.doc2bow(line))
             print(type(dictionary.doc2bow(line)))
-            yield dictionary.doc2bow(line)
+            return dictionary.doc2bow(line)
 
 corpus = MyCorpus()
 print(corpus)
