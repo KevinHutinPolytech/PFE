@@ -1,15 +1,18 @@
+# coding: utf8
+from __future__ import unicode_literals
+from unidecode import unidecode
 import nltk
 
 text = "Bonjour, aujourd'hui semble être une belle journée"
-
-for sent in nltk.sent_tokenize(text):
+textok = unidecode(text)
+for sent in nltk.sent_tokenize(textok):
     print(list(nltk.pos_tag(nltk.word_tokenize(sent))))
     print()
     
 import json
 def read_file(file):
         for line in file:
-            yield json.loads(line)["text"]
+            yield unidecode(json.loads(line)["text"])
 
 from gensim import corpora
 with open ('stream_StopMacron.json', 'r') as f:
