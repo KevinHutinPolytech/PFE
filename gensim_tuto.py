@@ -1,5 +1,5 @@
 from gensim import corpora
-
+import os
 documents = ["Human machine interface for lab abc computer applications",
               "A survey of user opinion of computer system response time",
               "The EPS user interface management system",
