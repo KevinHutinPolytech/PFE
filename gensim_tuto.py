@@ -69,8 +69,8 @@ lda = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
 
 doc = "Human computer interaction"
 vec_bow = dictionary.doc2bow(doc.lower().split())
-vec_lsi = lsi[vec_bow] # convert the query to LSI space
-print(vec_lsi)
+vec_lsa = lsa[vec_bow] # convert the query to LSI space
+print(vec_lsa)
 
 index = similarities.MatrixSimilarity(lda[corpus]) # transform corpus to LSI space and index it
 
