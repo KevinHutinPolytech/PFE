@@ -77,6 +77,8 @@ index = similarities.MatrixSimilarity(lda[corpus]) # transform corpus to LSI spa
 index.save('/tmp/deerwester.index')
 index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
 
+sims = index[vec_lda]
+print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
 sims = sorted(enumerate(sims), key=lambda item: -item[1])
 print(sims) # print sorted (document number, similarity score) 2-tuples
 
