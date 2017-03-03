@@ -41,3 +41,20 @@ print(new_vec)  # the word "interaction" does not appear in the dictionary and i
 corpus = [dictionary.doc2bow(text) for text in texts]
 corpora.MmCorpus.serialize('/tmp/deerwester.mm', corpus)  # store to disk, for later use
 print(corpus)
+
+
+#######################TUTO2###########################################
+
+
+from gensim import corpora, models, similarities
+if (os.path.exists("/tmp/deerwester.dict")):
+   dictionary = corpora.Dictionary.load('/tmp/deerwester.dict')
+   corpus = corpora.MmCorpus('/tmp/deerwester.mm')
+   print("Used files generated from first tutorial")
+else:
+   print("Please run first tutorial to generate data set")
+
+
+model = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
+
+pprint(model)
