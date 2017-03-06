@@ -45,7 +45,7 @@ print(corpus)
 
 #######################TUTO2###########################################
 
-
+print('tuto2')
 from gensim import corpora, models, similarities
 if (os.path.exists("/tmp/deerwester.dict")):
    dictionary = corpora.Dictionary.load('/tmp/deerwester.dict')
@@ -60,10 +60,15 @@ model = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
 pprint(model)
 
 #######################TUTO3###########################################
+print('tuto3')
 from gensim import corpora, models, similarities
 dictionary = corpora.Dictionary.load('/tmp/deerwester.dict')
 corpus = corpora.MmCorpus('/tmp/deerwester.mm') # comes from the first tutorial, "From strings to vectors"
 print(corpus)
+
+print("")
+print("LDA")
+print("")
 
 lda = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
 
@@ -77,9 +82,28 @@ index = similarities.MatrixSimilarity(lda[corpus]) # transform corpus to LSI spa
 index.save('/tmp/deerwester.index')
 index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
 
-sims = index[vec_lda]
+sims = index[vec_lda]# perform a similarity query against the corpus
 print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
 sims = sorted(enumerate(sims), key=lambda item: -item[1])
 print(sims) # print sorted (document number, similarity score) 2-tuples
 
+print("")
+print("LSI")
+print("")
 
+lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=2)
+
+doc = "Human computer interaction"
+vec_bow = dictionary.doc2bow(doc.lower().split())
+vec_lsi = lsi[vec_bow] # convert the query to LSI space
+print(vec_lsi)
+
+index = similarities.MatrixSimilarity(lsi[corpus]) # transform corpus to LSI space and index it
+
+index.save('/tmp/deerwester.index')
+index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
+
+sims = index[vec_lsi]# perform a similarity query against the corpus
+print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
+sims = sorted(enumerate(sims), key=lambda item: -item[1])
+print(sims) # print sorted (document number, similarity score) 2-tuples
