@@ -55,7 +55,7 @@ else:
    print("Please run first tutorial to generate data set")
 
 
-model = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
+model = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
 
 pprint(model)
 
@@ -70,7 +70,7 @@ print("")
 print("LDA")
 print("")
 
-lda = models.LdaModel(corpus, id2word=dictionary, num_topics=100)
+lda = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
 
 doc = "Human computer interaction"
 vec_bow = dictionary.doc2bow(doc.lower().split())
