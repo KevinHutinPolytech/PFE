@@ -1,17 +1,17 @@
 from gensim import corpora
 import os
-documents = ["Human machine interface for lab abc computer applications",
-              "A survey of user opinion of computer system response time",
-              "The EPS user interface management system",
-             "System and human system engineering testing of EPS",
-             "Relation of user perceived response time to error measurement",
-             "The generation of random binary unordered trees",
-             "The intersection graph of paths in trees",
-             "Graph minors IV Widths of trees and well quasi ordering",
-              "Graph minors A survey"]
+documents = ["La justice pour tous demande une jurice digne de ce nom ",
+              "Pauvre theo qui ne demande que justice soit faite",
+              "PSG du lourd ce soir, au chiotte marseille",
+             "Si il ne savent pas jouer avec un ballon autant arreter le foot",
+             "une honte pour lhistoire du football",
+             "La planete se meure et personne ne sen preocupe",
+             "Foret devastee, crime contre l humanite ou va lavenir de cette planete",
+             "Nul doute il sest fais tuer",
+              "disparition de Tom Viguer, le respect a disparue"]
 
 # remove common words and tokenize
-stoplist = set('for a of the and to in'.split())
+stoplist = set('le la pour de a les et dans'.split())
 texts = [[word for word in document.lower().split() if word not in stoplist]
          for document in documents]
 
@@ -34,7 +34,7 @@ print(dictionary)
 
 print(dictionary.token2id)
 
-new_doc = "Human computer interaction"
+new_doc = "Quel sentence appliquer au criminel, qui se battent contre la justice"
 new_vec = dictionary.doc2bow(new_doc.lower().split())
 print(new_vec)  # the word "interaction" does not appear in the dictionary and is ignored
 
@@ -72,7 +72,7 @@ print("")
 
 lda = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
 
-doc = "Human computer interaction"
+doc = "Quel sentence appliquer au criminel, qui se batte contre la justice"
 vec_bow = dictionary.doc2bow(doc.lower().split())
 vec_lda = lda[vec_bow] # convert the query to LSI space
 print(vec_lda)
@@ -93,7 +93,7 @@ print("")
 
 lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=2)
 
-doc = "Human computer interaction"
+doc = "Quel sentence appliquer au criminel, qui se batte contre la justice"
 vec_bow = dictionary.doc2bow(doc.lower().split())
 vec_lsi = lsi[vec_bow] # convert the query to LSI space
 print(vec_lsi)
