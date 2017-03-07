@@ -61,7 +61,7 @@ print('ok')
 with open(filename,'r') as f:
     for line in f:
         print(line)
-        line = "boucher il est tomber par la mais pas sur"
+        line = "boucher il est tombé par la mais pas sur"
         list_of_tokens = preprocess(line)
         print('ok2')        
 print(list_of_tokens)
