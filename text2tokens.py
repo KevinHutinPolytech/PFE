@@ -66,6 +66,7 @@ with open(filename,'r') as f:
         list_of_tokens = preprocess(line)
         print('ok2')
     toutesleslignes = f.readlines()
+    print(toutesleslignes)
     list_of_tokens2 = preprocess(toutesleslignes)
     print(list_of_tokens2)
 print(list_of_tokens)
