@@ -59,9 +59,13 @@ def preprocess(text):
 filename = sys.argv[1]
 print('ok')
 with open(filename,'r') as f:
+    
     for line in f:
         print(line)
         line = "boucher il est tombé par la mais pas sur"
         list_of_tokens = preprocess(line)
-        print('ok2')        
+        print('ok2')
+    toutesleslignes = f.readlines()
+    list_of_tokens2 = preprocess(toutesleslignes)
+    print(list_of_tokens2)
 print(list_of_tokens)
