@@ -61,6 +61,7 @@ filename = 'Emploi.txt'
 print('ok')
 with open(filename,'r') as f:
     for line in f:
+        print(line)
         list_of_tokens = preprocess(line)
         print('ok2')        
 print(list_of_tokens)
