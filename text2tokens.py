@@ -13,10 +13,7 @@ import string
 from nltk import bigrams 
 from unidecode import unidecode
 from nltk.stem.snowball import SnowballStemmer
-from nltk.stem.snowball import FrenchStemmer
-
-def tokenize(text):
-    return tokens_re.findall(text)
+ 
  
 def preprocess(text):
     
@@ -53,7 +50,7 @@ def preprocess(text):
     stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
-    tokens = tokenize(text)
+    tokens = tokens_re.findall(text)
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
     terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
     terms_stem = [stemmer.stem(term) for term in terms_stop ]
