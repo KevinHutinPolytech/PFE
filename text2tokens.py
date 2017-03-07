@@ -50,16 +50,17 @@ def preprocess(text):
     stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
-    tokens = tokens_re.findall(text)
+    tokens = tokens_re.findall(unidecode(text))
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
     terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
     terms_stem = [stemmer.stem(term) for term in terms_stop ]
     return terms_stem
 
 filename = sys.argv[1]
-
+filename = 'Emploi.txt'
+print('ok')
 with open(filename,'r') as f:
     for line in f:
         list_of_tokens = preprocess(line)
-        
+        print('ok2')        
 print(list_of_tokens)
