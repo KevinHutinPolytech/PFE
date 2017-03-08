@@ -53,9 +53,13 @@ def preprocess(text):
     print(text)
     print(type(text))
     tokens = tokens_re.findall(unidecode(text))
+    print(tokens)
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
+    print(tokens)
     terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+    print(terms_stop)
     terms_stem = [stemmer.stem(term) for term in terms_stop ]
+    print(terms_stem)
     return terms_stem
 
 filename = sys.argv[1]
@@ -63,10 +67,6 @@ print('ok')
 with open(filename,'r') as f:
     
     for line in f:
-        print(line.decode('unicode-escape'))
-        print(type(line))
-        print(line[0])
-        print(type(line[0]))
         list_of_tokens = preprocess(line.decode('unicode-escape'))
         print('ok2')
     
