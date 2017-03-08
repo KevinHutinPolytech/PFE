@@ -63,11 +63,11 @@ print('ok')
 with open(filename,'r') as f:
     
     for line in f:
-        print(line)
+        print(unicode(line))
         print(type(line))
         print(line[0])
         print(type(line[0]))
-        list_of_tokens = preprocess(line)
+        list_of_tokens = preprocess(unicode(line))
         print('ok2')
     
 print(list_of_tokens)
