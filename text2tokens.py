@@ -50,6 +50,8 @@ def preprocess(text):
     stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
+    print(text)
+    print(type(text))
     tokens = tokens_re.findall(unidecode(text))
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
     terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
