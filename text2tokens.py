@@ -52,7 +52,7 @@ def preprocess(text):
     stemmer = SnowballStemmer('french')
     print(text)
     print(type(text))
-    for x in text:
+    for x in unidecode(text):
         x[0] = x[0].replace('\x00','')
         
     tokens = tokens_re.findall(text)
