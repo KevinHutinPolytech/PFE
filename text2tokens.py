@@ -53,7 +53,8 @@ def preprocess(text):
     print(text)
     print(type(text))
     for x in unidecode(text):
-        x[0] = x[0].replace('\x00','')
+        print(x)
+        re.sub(u'\x00', '', x)
         
     tokens = tokens_re.findall(text)
     print(tokens)
