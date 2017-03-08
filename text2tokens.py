@@ -51,6 +51,7 @@ def preprocess(text):
 
     stemmer = SnowballStemmer('french')
     print(text)
+    print(unidecode(text))
     print(type(text))
     tokens = tokens_re.findall(text)
     print(tokens)
