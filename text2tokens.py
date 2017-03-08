@@ -51,11 +51,7 @@ def preprocess(text):
 
     stemmer = SnowballStemmer('french')
     print(text)
-    print(type(text))
-    for x in unidecode(text):
-        print(x)
-        re.sub(u'\x00', '', x)
-        
+    print(type(text))       
     tokens = tokens_re.findall(text)
     print(tokens)
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
@@ -71,6 +67,8 @@ print('ok')
 with open(filename,'r') as f:
     
     for line in f:
+        print(line)
+        print(type(line))
         list_of_tokens = preprocess(line.decode('unicode-escape'))
         print('ok2')
     
