@@ -51,8 +51,10 @@ def preprocess(text):
 
     stemmer = SnowballStemmer('french')
     print(text)
-    print(unidecode(text))
     print(type(text))
+    for x in text:
+        x[0] = x[0].replace('\x00','')
+        
     tokens = tokens_re.findall(text)
     print(tokens)
     tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
