@@ -43,6 +43,8 @@ def json2redis(filename,database):
 def getTweetText(tweet):
     print('getTweetText')
     print(type(tweet))
+    tweet = json.loads(decode(tweet))
+    print(type(tweet))
     tweet = json.loads(tweet)
     print(type(tweet))
     text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
