@@ -14,7 +14,8 @@ import string
 from nltk import bigrams 
 from unidecode import unidecode
 from nltk.stem.snowball import SnowballStemmer
-
+from gensim import corpora
+import os
 #############################FONCTIONS####################################
 
 
@@ -63,7 +64,15 @@ def text2tokens(text,mode):
         terms_stem = [stemmer.stem(term) for term in terms_stop ]
         return terms_stem
 
-
+def txt2lda(monfichier):    
+    try :
+        with open(monfichier,'r') as f:    
+            texts = [[token for token in text2tokens(line.decode('unicode-escape'),"s")] for line in f ]
+            print(texts)
+            
+    except :
+        print('Erreur 5a')
+        print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
 
 
 ######################################## MAIN ################################
@@ -73,7 +82,7 @@ while True :
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
     print("4 : tokeniser un text ")
-    print('5 : LDA')
+    print('5 : Créer un corpus avec le model LDA')
     mode = input("Quel mode choisir ? ")
     if mode == 1 :
         print('Non implémenté')
@@ -94,7 +103,7 @@ while True :
                         print(tokens)
             except :
                 print(" Erreur 41 ")
-                print("le nom du fichier doit être de la forme monfichier.txt ou /sousdossier/monfichier.txt encodé en ANSII")
+                print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
 
         if sousmode == 2 :        
             chaine = input("Entrez la chaine de caractere :  ")
@@ -107,4 +116,5 @@ while True :
 
 
 if mode == 5 :
-    print('Non implémenté')
+    filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
+    txt2lda(filename)
