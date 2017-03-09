@@ -43,7 +43,11 @@ def json2redis(filename,database):
 def getTweetText(tweet):
     print('getTweetText')
     print(type(tweet))
+    print(tweet)
     print(type(unicode(tweet)))
+    print(tweet)
+    STRING_DATA = dict([(str(k), v) for k, v in tweet.items()])
+    print(STRING_DATA)
     tweet = json.loads(unicode(tweet))
     print(type(tweet))
     tweet = json.loads(tweet)
