@@ -86,7 +86,7 @@ while True :
         print('2 : tokeniser un une chaine de caractere')
         sousmode = input("Quel mode choisir ? ") 
         if sousmode == 1 :        
-            filename = input("Quel est le nom du fichier ou chemain d'accès ? ")
+            filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
             try :
                 with open(filename,'r') as f:    
                     for line in f:        
@@ -97,7 +97,7 @@ while True :
                 print("le nom du fichier doit être de la forme monfichier.txt ou /sousdossier/monfichier.txt encodé en ANSII")
 
         if sousmode == 2 :        
-            chaine = input("Entrez la chaine de caractère :  ")
+            chaine = input("Entrez la chaine de caractere :  ")
             try :                                        
                 tokens = text2tokens(chaine.decode('unicode-escape'),s)
                 print(tokens)
