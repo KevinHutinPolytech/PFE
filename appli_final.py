@@ -16,6 +16,8 @@ from unidecode import unidecode
 from nltk.stem.snowball import SnowballStemmer
 from gensim import corpora
 import os
+from collections import defaultdict
+from pprint import pprint  # pretty-printer
 #############################FONCTIONS####################################
 
 
@@ -52,7 +54,7 @@ def text2tokens(text,mode):
     tokens that are not emoticons (e.g. :D doesn’t become :d).
     """
     punctuation = list(string.punctuation)
-    stop = stopwords.words('french') + punctuation + ['via','le','les','a','rt'] # Liste des tokens à effacer
+    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
     tokens = tokens_re.findall(unidecode(text))
@@ -67,8 +69,15 @@ def text2tokens(text,mode):
 def txt2lda(monfichier):    
     try :
         with open(monfichier,'r') as f:    
-            texts = [[token for token in text2tokens(line.decode('unicode-escape'),"s")] for line in f ]
+            texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"s") if len(tokens) != 0 ] for line in f ]
             print(texts)
+            # remove words that appear only once            
+            frequency = defaultdict(int)
+            for text in texts:
+                for token in text:
+                    frequency[token] += 1
+            texts = [[token for token in text if frequency[token] > 1] for text in texts]
+            pprint(texts)
             
     except :
         print('Erreur 5a')
