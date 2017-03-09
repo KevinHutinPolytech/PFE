@@ -89,9 +89,9 @@ while true :
             filename = input("Quel est le nom du fichier ou chemain d'accès ? ")
             try :
                 with open(filename,'r') as f:    
-                for line in f:        
-                    tokens = text2tokens(line.decode('unicode-escape'),s)
-                    print(tokens)
+                    for line in f:        
+                        tokens = text2tokens(line.decode('unicode-escape'),s)
+                        print(tokens)
             except :
                 print(" Erreur 41 ")
                 print("le nom du fichier doit être de la forme monfichier.txt ou /sousdossier/monfichier.txt encodé en ANSII")
@@ -99,8 +99,8 @@ while true :
         if sousmode == 2 :        
             chaine = input("Entrez la chaine de caractère :  ")
             try :                                        
-                    tokens = text2tokens(chaine.decode('unicode-escape'),s)
-                    print(tokens)
+                tokens = text2tokens(chaine.decode('unicode-escape'),s)
+                print(tokens)
             except :
                 print(" Erreur 42 ")
                
