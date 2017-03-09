@@ -68,7 +68,7 @@ def text2tokens(text,mode):
 
 ######################################## MAIN ################################
 
-while true :
+while True :
     print("1 : Tracker des tweet sur twitter ")
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
