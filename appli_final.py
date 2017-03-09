@@ -70,14 +70,17 @@ def txt2lda(monfichier):
     try :
         with open(monfichier,'r') as f:    
             texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"s") if len(tokens) != 0 ] for line in f ]
-            print(texts)
             # remove words that appear only once            
             frequency = defaultdict(int)
             for text in texts:
                 for token in text:
                     frequency[token] += 1
             texts = [[token for token in text if frequency[token] > 1] for text in texts]
-            pprint(texts)
+            dictionary = corpora.Dictionary(texts)
+            dictionary.save('/tmp/emploi.dict')  # store the dictionary, for future reference
+            print(dictionary)
+
+            print(dictionary.token2id)
             
     except :
         print('Erreur 5a')
