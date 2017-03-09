@@ -44,11 +44,6 @@ def getTweetText(tweet):
     print('getTweetText')
     print(type(tweet))
     print(tweet)
-    print(type(unicode(tweet)))
-    print(tweet)
-    print(unidecode(tweet))
-    tweet = json.loads(unidecode(tweet))
-    print(type(tweet))
     tweet = json.loads(tweet)
     print(type(tweet))
     text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
@@ -156,7 +151,7 @@ while True :
             print('line')
             print(line)
             # tweet = json2tweet(line)
-            text = getTweetText(line)
+            text = getTweetText(line.decode('unicode-escape'))
             print(text)
             
     if mode == 4 :
