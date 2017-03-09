@@ -140,7 +140,17 @@ while True :
         filename = input(" Nom fichier json : ")
         json2redis(filename,basejson)
     if mode == 3 :
-        print('Non implémenté')
+        basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
+        filename = input(" Nom fichier json : ")
+        jsonfile = redis2json(filename,basejson)
+
+        for line in jsonfile:            
+            print('line')
+            print(line)
+            # tweet = json2tweet(line)
+            text = getTweetText(line)
+            print(text)
+            
     if mode == 4 :
         print('1 : tokeniser un fichier .txt')
         print('2 : tokeniser un une chaine de caractere')
