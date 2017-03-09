@@ -79,9 +79,11 @@ def txt2lda(monfichier):
             dictionary = corpora.Dictionary(texts)
             dictionary.save('/tmp/emploi.dict')  # store the dictionary, for future reference
             print(dictionary)
-
-            print(dictionary.token2id)
-            
+            corpus = [dictionary.doc2bow(text) for text in texts]
+            corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
+            print(corpus)
+            model = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
+            pprint(model)
     except :
         print('Erreur 5a')
         print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
