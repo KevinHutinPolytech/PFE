@@ -83,7 +83,7 @@ def txt2lda(monfichier):
             corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
             print(corpus)
             print(len(texts))
-            model = models.LdaModel(corpus, id2word=dictionary, num_topics=10))
+            model = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
             pprint(model)
     except :
         print('Erreur 5a')
