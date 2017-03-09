@@ -18,8 +18,42 @@ from gensim import corpora
 import os
 from collections import defaultdict
 from pprint import pprint  # pretty-printer
+import redis
+import sys
+import re
+import json
 #############################FONCTIONS####################################
 
+
+
+def json2redis(filename,database):
+    with open(filename, 'r') as f:
+        for line in f:
+            m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
+            if m != None :
+                try :                
+                    tweet = json.loads(line)
+                    date = json.dumps(tweet['created_at'])
+                    database.hset(filename,date,tweet)
+                    print('Importation réussi')
+                except:
+                    print('failed try push json into redis')
+                    pass
+
+def getTweetText(tweet):
+    print('getTweetText')
+    #tweet = json.loads(tweet)
+    text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
+    return text
+
+def redis2json(hashname, database):
+    jsonfile = database.hvals(hashname)
+    return jsonfile
+
+def json2tweet(line):
+    print('json2tweet')
+    tweet = json.loads(line)
+    return tweet
 
 # Trait un texte en entrer (unicode) et retourne le texte tokeniser (mode = t),  stemmer (mode = s)
 def text2tokens(text,mode):
@@ -102,7 +136,9 @@ while True :
     if mode == 1 :
         print('Non implémenté')
     if mode == 2 :
-        print('Non implémenté')
+        basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
+        filename = input(" Nom fichier json : ")
+        json2redis(filename,basejson)
     if mode == 3 :
         print('Non implémenté')
     if mode == 4 :
