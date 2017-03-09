@@ -90,7 +90,7 @@ while True :
             try :
                 with open(filename,'r') as f:    
                     for line in f:        
-                        tokens = text2tokens(line.decode('unicode-escape'),s)
+                        tokens = text2tokens(line.decode('unicode-escape'),"s")
                         print(tokens)
             except :
                 print(" Erreur 41 ")
@@ -99,7 +99,7 @@ while True :
         if sousmode == 2 :        
             chaine = input("Entrez la chaine de caractere :  ")
             try :                                        
-                tokens = text2tokens(chaine.decode('unicode-escape'),s)
+                tokens = text2tokens(chaine.decode('unicode-escape'),"s")
                 print(tokens)
             except :
                 print(" Erreur 42 ")
