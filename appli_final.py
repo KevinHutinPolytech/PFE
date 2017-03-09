@@ -115,6 +115,6 @@ while True :
                
 
 
-if mode == 5 :
-    filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
-    txt2lda(filename)
+    if mode == 5 :
+        filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
+        txt2lda(filename)
