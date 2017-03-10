@@ -123,8 +123,10 @@ def txt2lda(monfichier):
         print(corpus)
         print(len(texts))
         
-        model = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
+        model = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
         pprint(model)
+        doc = " Le marché de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
+        doc_bow = dictionary.doc2bow(text2tokens(doc))
         print(model[doc_bow]) # get topic probability distribution for a document
         
     
