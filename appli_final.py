@@ -128,6 +128,10 @@ def txt2lda(monfichier):
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc.decode('unicode-escape'),"s"))
         print(model[doc_bow]) # get topic probability distribution for a document
+        for i in model[doc_bow] : 
+            topicid = i[0]
+            print(i[0])
+            print(model.get_topic_terms(topicid, topn=10))
         
     
        
