@@ -122,9 +122,9 @@ def txt2lda(monfichier):
         print(corpus)
         print(len(texts))
         
-        model = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
+        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
         print("Génération d'un model LDA...")
-        pprint(model)
+        pprint(lda)
         print("LDA généré")
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
