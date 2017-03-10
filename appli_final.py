@@ -22,8 +22,7 @@ import redis
 import sys
 import re
 import json
-from gensim import corpora
-from gensim import models
+from gensim import models ,corpora, similarities
 #############################FONCTIONS####################################
 
 
@@ -124,15 +123,30 @@ def txt2lda(monfichier):
         print(len(texts))
         
         model = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
+        print("Génération d'un model LDA...")
         pprint(model)
+        print("LDA généré")
+        monfichier.close()
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc.decode('unicode-escape'),"s"))
-        print(model[doc_bow]) # get topic probability distribution for a document
-        for i in model[doc_bow] : 
+        print(lda[doc_bow]) # get topic probability distribution for a document
+        vec_lda = lda[doc_bow]
+        for i in vec_lda : 
             topicid = i[0]
             print(i[0])
-            print(model.get_topic_terms(topicid, topn=10))
-        print(dictionary.token2id)
+            print(lda.get_topic_terms(topicid, topn=10))
+        # print(dictionary.token2id)
+        index = similarities.MatrixSimilarity(lda[corpus]) # transform corpus to LSI space and index it
+
+        index.save('/tmp/deerwester.index')
+        index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
+
+        sims = index[vec_lda]# perform a similarity query against the corpus
+        print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
+        sims = sorted(enumerate(sims), key=lambda item: -item[1])
+        print(sims) # print sorted (document number, similarity score) 2-tuples
+    return model
+       
         
     
        
@@ -192,4 +206,5 @@ while True :
 
     if mode == 5 :
         filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
-        txt2lda(filename)
+        lda = txt2lda(filename)
+       
