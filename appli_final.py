@@ -104,28 +104,27 @@ def text2tokens(text,mode):
         return terms_stem
 
 def txt2lda(monfichier):    
-    try :
-        with open(monfichier,'r') as f:    
-            texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"s") if len(tokens) != 0 ] for line in f ]
-            # remove words that appear only once            
-            frequency = defaultdict(int)
-            for text in texts:
-                for token in text:
-                    frequency[token] += 1
-            texts = [[token for token in text if frequency[token] > 1] for text in texts]
-            dictionary = corpora.Dictionary(texts)
-            dictionary.save('/tmp/emploi.dict')  # store the dictionary, for future reference
-            print(dictionary)
-            corpus = [dictionary.doc2bow(text) for text in texts]
-            corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
-            print(corpus)
-            print(len(texts))
-            lda = LdaModel(corpus, num_topics=100)  # train model
-            print(lda[doc_bow]) # get topic probability distribution for a document
-            model = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
-            pprint(model)
-    except :
-        print('Erreur 5a')
+    
+    with open(monfichier,'r') as f:    
+        texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"s") if len(tokens) != 0 ] for line in f ]
+        # remove words that appear only once            
+        frequency = defaultdict(int)
+        for text in texts:
+            for token in text:
+                frequency[token] += 1
+        texts = [[token for token in text if frequency[token] > 1] for text in texts]
+        dictionary = corpora.Dictionary(texts)
+        dictionary.save('/tmp/emploi.dict')  # store the dictionary, for future reference
+        print(dictionary)
+        corpus = [dictionary.doc2bow(text) for text in texts]
+        corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
+        print(corpus)
+        print(len(texts))
+        lda = LdaModel(corpus, num_topics=2)  # train model
+        print(lda[doc_bow]) # get topic probability distribution for a document
+        model = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
+        pprint(model)
+    
        
 
 
