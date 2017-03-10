@@ -120,10 +120,11 @@ def txt2lda(monfichier):
         corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
         print(corpus)
         print(len(texts))
-        lda = LdaModel(corpus, num_topics=2)  # train model
-        print(lda[doc_bow]) # get topic probability distribution for a document
+        
         model = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
         pprint(model)
+        print(model[doc_bow]) # get topic probability distribution for a document
+        
     
        
 
