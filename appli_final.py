@@ -132,6 +132,7 @@ def txt2lda(monfichier):
             topicid = i[0]
             print(i[0])
             print(model.get_topic_terms(topicid, topn=10))
+            print(dictionary.token2id)
         
     
        
