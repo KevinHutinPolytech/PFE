@@ -22,6 +22,7 @@ import redis
 import sys
 import re
 import json
+from gensim import corpora
 #############################FONCTIONS####################################
 
 
