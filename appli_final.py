@@ -126,7 +126,7 @@ def txt2lda(monfichier):
         print("Génération d'un model LDA...")
         pprint(model)
         print("LDA généré")
-        monfichier.close()
+        
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc.decode('unicode-escape'),"s"))
         print(lda[doc_bow]) # get topic probability distribution for a document
@@ -145,6 +145,7 @@ def txt2lda(monfichier):
         print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         print(sims) # print sorted (document number, similarity score) 2-tuples
+        f.close()
     return model
        
         
