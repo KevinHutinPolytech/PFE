@@ -135,16 +135,7 @@ def txt2lda(monfichier):
             topicid = i[0]
             print(i[0])
             print(lda.get_topic_terms(topicid, topn=10))
-        index = similarities.MatrixSimilarity(lda[corpus]) # transform corpus to LDA space and index it
-
-        index.save('/tmp/emploi.index')
-        index = similarities.MatrixSimilarity.load('/tmp/emploi.index')
-
-        sims = index[vec_lda]# perform a similarity query against the corpus
-       # print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
-        sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        print(sims) # print sorted (document number, similarity score) 2-tuples
-        print(dictionary.token2id())
+        
         f.close()
     return lda
        
