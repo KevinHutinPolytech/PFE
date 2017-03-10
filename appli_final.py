@@ -144,7 +144,7 @@ def txt2lda(monfichier):
        # print(list(enumerate(sims))) # print (document_number, document_similarity) 2-tuples
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         print(sims) # print sorted (document number, similarity score) 2-tuples
-        print(sorted(enumerate(dictionary.token2id()), key=lambda item: -item[1]))
+        print(dictionary.token2id())
         f.close()
     return lda
        
