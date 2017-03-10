@@ -23,6 +23,7 @@ import sys
 import re
 import json
 from gensim import corpora
+from gensim import models
 #############################FONCTIONS####################################
 
 
