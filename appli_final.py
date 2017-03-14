@@ -104,13 +104,15 @@ def json2redis(filename,database):
 
 # Fonctionne lorsque on utilise un fichier json mais pose des problème quand onextrait un json provenant d'un redis car convertit en str
 def getTweetText(tweet):
-    print('getTweetText')
-    #print(type(tweet))
-    #print(tweet)
-    tweet = json.loads(tweet)
-    #print(type(tweet))
-    text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
-    return text
+    m = re.search(".",tweet) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
+    if m != None :
+        #print('getTweetText')
+        #print(type(tweet))
+        #print(tweet)
+        tweet = json.loads(tweet)
+        #print(type(tweet))
+        text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
+        return text
 
 def redis2json(hashname, database):
     jsonfile = database.hvals(hashname)
@@ -277,7 +279,6 @@ while True :
             for line in f:        
                 count = count +1
                 text = getTweetText(line)
-                print(type(text))
                 print(text)
                 tokens = text2tokens(text,"t")
                 stems = text2tokens(text,"s")
