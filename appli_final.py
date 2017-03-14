@@ -100,7 +100,7 @@ def json2redis(filename,database):
                     print('Importation réussi')
                 except:
                     print('failed try push json into redis')
-                    print("Nom du fichier : ",filename," Tweet : ", line, " Type tweet" : type(line))
+                    print("Nom du fichier : ",filename," Tweet : ", line, " Type tweet : " , type(line))
                     pass
 
 # Fonctionne lorsque on utilise un fichier json mais pose des problème quand onextrait un json provenant d'un redis car convertit en str
