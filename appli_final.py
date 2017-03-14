@@ -291,6 +291,6 @@ while True :
         print(list_dico)
     if mode == 7 :#Compter le nombre de tweet dans un json
         filename = input(" Entrer le ficher a compter  : ")
-        countTweetInJson(filename)
-        
+        count = countTweetInJson(filename)
+        print(count)
         
