@@ -268,8 +268,9 @@ while True :
         wordkey = input("Entrer la chaine a tracker : ")
         topic = input("Entrer le topic dans lequel s'inscrit ce mot cle : ")
         #tracktweet
-        #getTWeetText
-        filename = "presidentielle.json"
+        query_fname = ' '.join(wordkey) # string
+        safe_fname = format_filename(query_fname)
+        filename = "%s.json" % safe_fname
         list_dico =[]
         count = 0
         with open(filename,'r') as f:    
