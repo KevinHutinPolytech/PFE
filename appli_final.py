@@ -22,19 +22,19 @@ import tweepy
 import time
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+
+########################################### CONNECTION A API TWITER ###########################################
+consumer_key = 'STuwMlRcOAM4x11tvFnhrNfov'
+consumer_secret = 'Ow12PHjNB5IkErNB6PrIaYynqIwk9Z4XkRCRlcmXqaLlA19NUd'
+access_token = '828603299993645057-pTEQy5rv2ZnOSjvTnnDLLED4KRPkEb7'
+access_secret = 'XX4GnbeXW9RSfNjqyDYu9hXkr1ZgKojEaCu0BUMPQh6To'
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.secure = True
+auth.set_access_token(access_token, access_secret) 
+api = tweepy.API(auth)
+
+
 #############################FONCTIONS####################################
-
-
-def connectAPI():
-    consumer_key = 'wQXEY8NBl2qOzFRb9w2Pq2nxZ'
-    consumer_secret = 'iTIuapORSZ27cCnBRMjBmDus1aW3L69sachFfs5Ibqczw8Uvc5'
-    access_token = '828603299993645057-pTEQy5rv2ZnOSjvTnnDLLED4KRPkEb7'
-    access_secret = 'XX4GnbeXW9RSfNjqyDYu9hXkr1ZgKojEaCu0BUMPQh6To'
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.secure = True
-    auth.set_access_token(access_token, access_secret) 
-    api = tweepy.API(auth)
-    return api,auth
 
 class MyListener(StreamListener):
 
@@ -73,7 +73,6 @@ def convert_valid(one_char):
         return ''
     
 def tracker(query):
-    api,auth = connectAPI()
     query_fname = ' '.join(query) # string
     twitter_stream = Stream(auth, MyListener(query_fname))
     twitter_stream.filter(track=query, async=True)
@@ -226,6 +225,7 @@ while True :
     print("4 : tokeniser un text ")
     print('5 : Créer un corpus avec le model LDA')    
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
+    print('7 : Compte le nombre de tweet dans un fichier json")
     mode = input("Quel mode choisir ? ")
     if mode == 1 :
         query = input("Entrer la chaine de charactere a tracker : ")
