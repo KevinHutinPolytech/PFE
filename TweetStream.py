@@ -14,8 +14,8 @@ from tweepy import Stream
 from tweepy.streaming import StreamListener
 
  
-consumer_key = 'wQXEY8NBl2qOzFRb9w2Pq2nxZ'
-consumer_secret = 'iTIuapORSZ27cCnBRMjBmDus1aW3L69sachFfs5Ibqczw8Uvc5'
+consumer_key = 'STuwMlRcOAM4x11tvFnhrNfov'
+consumer_secret = 'Ow12PHjNB5IkErNB6PrIaYynqIwk9Z4XkRCRlcmXqaLlA19NUd'
 access_token = '828603299993645057-pTEQy5rv2ZnOSjvTnnDLLED4KRPkEb7'
 access_secret = 'XX4GnbeXW9RSfNjqyDYu9hXkr1ZgKojEaCu0BUMPQh6To'
  
@@ -75,7 +75,8 @@ def convert_valid(one_char):
         return '_'
 
 
-query = sys.argv[1:] # list of CLI arguments
+#query = sys.argv[1:] # list of CLI arguments
+query = "Hamon"
 print(query)
 print(type(query))
 if query == '-h' :
