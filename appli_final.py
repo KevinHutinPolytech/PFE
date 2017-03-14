@@ -44,10 +44,8 @@ class MyListener(StreamListener):
         self.count = 0
     def on_data(self, data):
         try:
-            with open(self.outfile, 'a') as f:
-                self.count = self.count + 1                
-                f.write(data)
-                print(self.count)
+            with open(self.outfile, 'a') as f:                            
+                f.write(data)                
                 f.close()
                 return True
         except BaseException as e:
