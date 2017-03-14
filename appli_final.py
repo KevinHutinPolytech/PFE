@@ -212,6 +212,8 @@ while True :
             for line in f:        
                 count = count +1
                 text = getTweetText(line)
+                print(type(text))
+                print(text)
                 tokens = text2tokens(text.decode('unicode-escape'),"t")
                 stems = text2tokens(text.decode('unicode-escape'),"s")
                 dico = {}
