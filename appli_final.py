@@ -214,8 +214,8 @@ while True :
                 text = getTweetText(line)
                 print(type(text))
                 print(text)
-                tokens = text2tokens(text.decode('unicode-escape'),"t")
-                stems = text2tokens(text.decode('unicode-escape'),"s")
+                tokens = text2tokens(text,"t")
+                stems = text2tokens(text,"s")
                 dico = {}
                 dico["id"] = count
                 dico["tokens"] = tokens
