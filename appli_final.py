@@ -193,10 +193,33 @@ while True :
                 print(tokens)
             except :
                 print(" Erreur 42 ")
-               
+                pass
 
 
     if mode == 5 :
         filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
         lda = txt2lda(filename)
-       
+    
+    if mode == 6 :
+        wordkey = input("Entrer la chaine a tracker : ")
+        topic = input("Entrer le topic dans lequel s'inscrit ce mot cle : ")
+        #tracktweet
+        #getTWeetText
+        filename = "presidentielle.json"
+        list_dico =[]
+        count = 0
+        with open(filename,'r') as f:    
+                    for line in f:        
+                        count = count +1
+                        tokens = text2tokens(line.decode('unicode-escape'),"t")
+                        stems = text2tokens(line.decode('unicode-escape'),"s")
+                        dico = {}
+                        dico["id"] = count
+                        dico["tokens"] = tokens
+                        dico["stems"] = stems
+                        dico["topic"] = topic
+                        list_dico.append(dico)
+        print(list_dico)
+        
+        
+        
