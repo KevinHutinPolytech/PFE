@@ -43,10 +43,10 @@ def json2redis(filename,database):
 
 def getTweetText(tweet):
     print('getTweetText')
-    print(type(tweet))
-    print(tweet)
+    #print(type(tweet))
+    #print(tweet)
     tweet = json.loads(tweet)
-    print(type(tweet))
+    #print(type(tweet))
     text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
     return text
 
@@ -209,17 +209,17 @@ while True :
         list_dico =[]
         count = 0
         with open(filename,'r') as f:    
-                    for line in f:        
-                        count = count +1
-                        text = getTweetText(line)
-                        tokens = text2tokens(text.decode('unicode-escape'),"t")
-                        stems = text2tokens(text.decode('unicode-escape'),"s")
-                        dico = {}
-                        dico["id"] = count
-                        dico["tokens"] = tokens
-                        dico["stems"] = stems
-                        dico["topic"] = topic
-                        list_dico.append(dico)
+            for line in f:        
+                count = count +1
+                text = getTweetText(line)
+                tokens = text2tokens(text.decode('unicode-escape'),"t")
+                stems = text2tokens(text.decode('unicode-escape'),"s")
+                dico = {}
+                dico["id"] = count
+                dico["tokens"] = tokens
+                dico["stems"] = stems
+                dico["topic"] = topic
+                list_dico.append(dico)
         print(list_dico)
         
         
