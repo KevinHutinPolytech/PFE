@@ -40,16 +40,15 @@ class MyListener(StreamListener):
 
     def __init__(self, fname):
         safe_fname = format_filename(fname)
-        self.outfile = "stream_%s.json" % safe_fname
+        self.outfile = "%s.json" % safe_fname
         self.count = 0
     def on_data(self, data):
         try:
             with open(self.outfile, 'a') as f:
-                self.count = self.count + 1
-                print(data)
-                print(type(data))
+                self.count = self.count + 1                
                 f.write(data)
                 print(self.count)
+                f.close()
                 return True
         except BaseException as e:
             print("quot;Error on_data: %s&quot;" % str(e))
