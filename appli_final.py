@@ -197,7 +197,7 @@ while True :
 
 
     if mode == 5 :
-        filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
+        filename = input("Quel est le nom du fichier ou chemin d'acces ? ")
         lda = txt2lda(filename)
     
     if mode == 6 :
@@ -211,8 +211,9 @@ while True :
         with open(filename,'r') as f:    
                     for line in f:        
                         count = count +1
-                        tokens = text2tokens(line.decode('unicode-escape'),"t")
-                        stems = text2tokens(line.decode('unicode-escape'),"s")
+                        text = getTweetText(line)
+                        tokens = text2tokens(text.decode('unicode-escape'),"t")
+                        stems = text2tokens(text.decode('unicode-escape'),"s")
                         dico = {}
                         dico["id"] = count
                         dico["tokens"] = tokens
