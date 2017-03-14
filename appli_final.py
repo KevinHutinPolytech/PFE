@@ -225,7 +225,7 @@ while True :
     print("4 : tokeniser un text ")
     print('5 : Créer un corpus avec le model LDA')    
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
-    print('7 : Compte le nombre de tweet dans un fichier json")
+    print('7 : Compte le nombre de tweet dans un fichier json')
     mode = input("Quel mode choisir ? ")
     if mode == 1 :
         query = input("Entrer la chaine de charactere a tracker : ")
