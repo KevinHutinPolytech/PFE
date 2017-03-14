@@ -41,6 +41,7 @@ def json2redis(filename,database):
                     print('failed try push json into redis')
                     pass
 
+# Fonctionne lorsque on utilise un fichier json mais pose des problème quand onextrait un json provenant d'un redis car convertit en str
 def getTweetText(tweet):
     print('getTweetText')
     #print(type(tweet))
@@ -96,10 +97,10 @@ def text2tokens(text,mode):
 
     stemmer = SnowballStemmer('french')
     tokens = tokens_re.findall(unidecode(text))
-    tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]
-    if mode == 't' :
-        return tokens
+    tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]    
     terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+    if mode == 't' :
+        return terms_stop
     if mode == 's' :
         terms_stem = [stemmer.stem(term) for term in terms_stop ]
         return terms_stem
