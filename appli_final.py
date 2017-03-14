@@ -100,6 +100,7 @@ def json2redis(filename,database):
                     print('Importation réussi')
                 except:
                     print('failed try push json into redis')
+                    print("Nom du fichier : ",filename," Tweet : ", line, " Type tweet" : type(line))
                     pass
 
 # Fonctionne lorsque on utilise un fichier json mais pose des problème quand onextrait un json provenant d'un redis car convertit en str
@@ -115,6 +116,8 @@ def getTweetText(tweet):
         return text
     except:
         print("Probleme dans la récupération du texte")
+        print("Tweet : ",tweet)
+        pass
 
 def redis2json(hashname, database):
     jsonfile = database.hvals(hashname)
@@ -161,15 +164,19 @@ def text2tokens(text,mode):
     stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
-    tokens = tokens_re.findall(unidecode(text))
-    tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]    
-    terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
-    if mode == 't' :
-        return terms_stop
-    if mode == 's' :
-        terms_stem = [stemmer.stem(term) for term in terms_stop ]
-        return terms_stem
-
+    try:
+        tokens = tokens_re.findall(unidecode(text))
+        tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]    
+        terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+        if mode == 't' :
+            return terms_stop
+        if mode == 's' :
+            terms_stem = [stemmer.stem(term) for term in terms_stop ]
+            return terms_stem
+    except:
+        print("Problème dans la tokenisation du text")
+        print("texte : ",text, "Type : ", type(text), "Mode : ",mode)
+        pass
 def txt2lda(monfichier):    
     
     with open(monfichier,'r') as f:    
