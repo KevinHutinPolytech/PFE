@@ -14,18 +14,82 @@ import string
 from nltk import bigrams 
 from unidecode import unidecode
 from nltk.stem.snowball import SnowballStemmer
-from gensim import corpora
 import os
 from collections import defaultdict
 from pprint import pprint  # pretty-printer
-import redis
-import sys
-import re
-import json
 from gensim import models ,corpora, similarities
+import tweepy
+import time
+from tweepy import Stream
+from tweepy.streaming import StreamListener
 #############################FONCTIONS####################################
 
 
+def connectAPI():
+    consumer_key = 'wQXEY8NBl2qOzFRb9w2Pq2nxZ'
+    consumer_secret = 'iTIuapORSZ27cCnBRMjBmDus1aW3L69sachFfs5Ibqczw8Uvc5'
+    access_token = '828603299993645057-pTEQy5rv2ZnOSjvTnnDLLED4KRPkEb7'
+    access_secret = 'XX4GnbeXW9RSfNjqyDYu9hXkr1ZgKojEaCu0BUMPQh6To'
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.secure = True
+    auth.set_access_token(access_token, access_secret) 
+    api = tweepy.API(auth)
+    return api,auth
+
+class MyListener(StreamListener):
+
+    def __init__(self, fname):
+        safe_fname = format_filename(fname)
+        self.outfile = "stream_%s.json" % safe_fname
+        self.count = 0
+    def on_data(self, data):
+        try:
+            with open(self.outfile, 'a') as f:
+                self.count = self.count + 1
+                print(data)
+                print(type(data))
+                f.write(data)
+                print(self.count)
+                return True
+        except BaseException as e:
+            print("quot;Error on_data: %s&quot;" % str(e))
+            return True
+ 
+    def on_error(self, status):
+        print(status)
+        return True
+    
+def format_filename(fname):
+    """Convert fname into a safe string for a file name.
+    Return: string
+    """
+    return ''.join(convert_valid(one_char) for one_char in fname)
+
+def convert_valid(one_char):
+    """Convert a character into '' if "invalid".
+    Return: string
+    """
+    valid_chars = "-_.%s%s" % (string.ascii_letters, string.digits)
+    if one_char in valid_chars:
+        return one_char
+    else:
+        return ''
+    
+def tracker(query):
+    api,auth = connectAPI()
+    query_fname = ' '.join(query) # string
+    twitter_stream = Stream(auth, MyListener(query_fname))
+    twitter_stream.filter(track=query, async=True)
+    
+def countTweetInJson(filename):
+    count = 0
+    with open(filename, 'r') as f:
+        for line in f:
+            m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
+            if m != None :
+                count = count + 1              
+        f.close()
+    return count
 
 def json2redis(filename,database):
     with open(filename, 'r') as f:
@@ -152,10 +216,12 @@ while True :
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
     print("4 : tokeniser un text ")
-    print('5 : Créer un corpus avec le model LDA')
+    print('5 : Créer un corpus avec le model LDA')    
+    print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     mode = input("Quel mode choisir ? ")
     if mode == 1 :
-        print('Non implémenté')
+        query = input("Entrer la chaine de charactere a tracker : ")
+        tracker(query)
     if mode == 2 :
         basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
         filename = input(" Nom fichier json : ")
@@ -167,7 +233,7 @@ while True :
 
         for line in jsonfile:            
             print('line')
-            print(line)
+            print(type(line))
             # tweet = json2tweet(line)
             text = getTweetText(line.decode('unicode-escape'))
             print(text)
@@ -218,12 +284,14 @@ while True :
                 tokens = text2tokens(text,"t")
                 stems = text2tokens(text,"s")
                 dico = {}
-                dico["id"] = count
+                dico["id_tweet"] = count
                 dico["tokens"] = tokens
                 dico["stems"] = stems
                 dico["topic"] = topic
                 list_dico.append(dico)
         print(list_dico)
-        
+    if mode == 7 :#Compter le nombre de tweet dans un json
+        filename = input(" Entrer le ficher a compter  : ")
+        countTweetInJson(filename)
         
         
