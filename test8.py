@@ -95,18 +95,19 @@ documents = []
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
 with open("Emploi.txt",'r') as f:    
-    texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"t") if len(tokens) != 0 ] for line in f ]
-    # remove words that appear only once            
-    frequency = defaultdict(int)
-    for text in texts:
-        for token in text:
-            frequency[token] += 1
-    texts = [[token for token in text if frequency[token] > 1] for text in texts]
-    pos = nltk.pos_tag(words)
-    print("Words : " , words , "POS : " ,pos)
-    for w in pos:
-        if w[1][0] in allowed_word_types:
-            all_words.append(w[0].lower())
+    for line in f :
+        texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"t") if len(tokens) != 0 ] for line in f ]
+        # remove words that appear only once            
+        frequency = defaultdict(int)
+        for text in texts:
+            for token in text:
+                frequency[token] += 1
+        texts = [[token for token in text if frequency[token] > 1] for text in texts]
+        pos = nltk.pos_tag(words)
+        print("Words : " , words , "POS : " ,pos)
+        for w in pos:
+            if w[1][0] in allowed_word_types:
+                all_words.append(w[0].lower())
 
 save_documents = open("documents.pickle","wb")
 pickle.dump(documents, save_documents)
