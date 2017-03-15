@@ -228,11 +228,11 @@ while True :
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
     #mode = input("Quel mode choisir ? ")
-    if mode == 1  :
+    if(mode == 1):
         query = input("Entrer les mots cle a tracker : ")
         words = [word for word in query.split()]
         tracker(words)
-    if mode == 2 :
+    if(mode == 2) :
         basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
         filename = input(" Nom fichier json : ")
         json2redis(filename,basejson)
