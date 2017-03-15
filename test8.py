@@ -129,16 +129,19 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
         for w in pos:
             if w[1][0] in allowed_word_types:
                 all_words.append(w[0].lower())
-        
+        print("all_words",all_words)
         
         texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
+        print("texts" , texts,"type", type(texts))
         # remove words that appear only once            
         frequency = defaultdict(int)
         for text in texts:
             for token in text:
                 frequency[token] += 1
         texts = [[token for token in text if frequency[token] > 1] for text in texts]
-        pos = nltk.pos_tag(texts)
+        print("texts" , texts[0],"type", type(texts[0]))
+        pos = nltk.pos_tag(texts[0])
+        
         print("Words : " , texts , "POS : " ,pos)
         for w in pos:
             if w[1][0] in allowed_word_types:
