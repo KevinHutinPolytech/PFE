@@ -304,4 +304,4 @@ while True :
         filename = input(" Entrer le ficher a compter  : ")
         count = countTweetInJson(filename)
         print(count)
-    if mode == 
+
