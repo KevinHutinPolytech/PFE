@@ -14,7 +14,6 @@ from sklearn.svm import SVC, LinearSVC, NuSVC
 from nltk.classify import ClassifierI
 from statistics import mode
 from nltk.tokenize import word_tokenize
-from __future__ import unicode_literals
 import operator 
 import json
 import sys
