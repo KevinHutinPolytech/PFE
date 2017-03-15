@@ -94,9 +94,9 @@ documents = []
 #  j is adject, r is adverb, and v is verb
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
-with open("Emploi.txt",'r') as f:    
+with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:    
     for line in f :
-        texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"t") if len(tokens) != 0 ] for line in f ]
+        texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
         # remove words that appear only once            
         frequency = defaultdict(int)
         for text in texts:
