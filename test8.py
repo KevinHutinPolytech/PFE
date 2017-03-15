@@ -1,3 +1,6 @@
+# coding: utf8
+from __future__ import unicode_literals
+from unidecode import unidecode
 import nltk
 import random
 #from nltk.corpus import movie_reviews
@@ -44,7 +47,7 @@ documents = []
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
 
-for p in short_pos.split('\n'):
+for p in short_pos.split('\n').decode('unicode-escape'):
     documents.append( (p, "pos") )
     words = word_tokenize(p)
     pos = nltk.pos_tag(words)
