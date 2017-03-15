@@ -75,8 +75,8 @@ def convert_valid(one_char):
         return ''
 
 
-#query = sys.argv[1:] # list of CLI arguments
-query = "Hamon"
+query = sys.argv[1:] # list of CLI arguments
+#query = "Hamon"
 print(query)
 print(type(query))
 if query == '-h' :
