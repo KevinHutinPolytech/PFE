@@ -14,7 +14,28 @@ from sklearn.svm import SVC, LinearSVC, NuSVC
 from nltk.classify import ClassifierI
 from statistics import mode
 from nltk.tokenize import word_tokenize
-
+from __future__ import unicode_literals
+import operator 
+import json
+import sys
+from collections import Counter
+import re
+import nltk
+from nltk.tokenize import word_tokenize
+import redis
+from nltk.corpus import stopwords
+import string
+from nltk import bigrams 
+from unidecode import unidecode
+from nltk.stem.snowball import SnowballStemmer
+import os
+from collections import defaultdict
+from pprint import pprint  # pretty-printer
+from gensim import models ,corpora, similarities
+import tweepy
+import time
+from tweepy import Stream
+from tweepy.streaming import StreamListener
 
 # Trait un texte en entrer (unicode) et retourne le texte tokeniser (mode = t),  stemmer (mode = s)
 def text2tokens(text,mode):
