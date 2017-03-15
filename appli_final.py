@@ -227,18 +227,18 @@ while True :
     print('5 : Créer un corpus avec le model LDA')    
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
-    mode = input("Quel mode choisir ? ")
-    if(mode == 1):
-        query = input("Entrer les mots cle a tracker : ")
+    mode = eval(input("Quel mode choisir ? "))
+    if mode == 1 :
+        query = eval(input("Entrer les mots cle a tracker : "))
         words = [word for word in query.split()]
         tracker(words)
-    if(mode == 2) :
+    if mode == 2 :
         basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
-        filename = input(" Nom fichier json : ")
+        filename = eval(input(" Nom fichier json : "))
         json2redis(filename,basejson)
     if mode == 3 :
         basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
-        filename = input(" Nom fichier json : ")
+        filename = eval(input(" Nom fichier json : "))
         jsonfile = redis2json(filename,basejson)
 
         for line in jsonfile:            
@@ -251,9 +251,9 @@ while True :
     if mode == 4 :
         print('1 : tokeniser un fichier .txt')
         print('2 : tokeniser un une chaine de caractere')
-        sousmode = input("Quel mode choisir ? ") 
+        sousmode = eval(input("Quel mode choisir ? "))
         if sousmode == 1 :        
-            filename = input("Quel est le nom du fichier ou chemain d'acces ? ")
+            filename = eval(input("Quel est le nom du fichier ou chemain d'acces ? "))
             try :
                 with open(filename,'r') as f:    
                     for line in f:        
@@ -264,7 +264,7 @@ while True :
                 print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
 
         if sousmode == 2 :        
-            chaine = input("Entrez la chaine de caractere :  ")
+            chaine = eval(input("Entrez la chaine de caractere :  "))
             try :                                        
                 tokens = text2tokens(chaine.decode('unicode-escape'),"s")
                 print(tokens)
@@ -274,12 +274,12 @@ while True :
 
 
     if mode == 5 :
-        filename = input("Quel est le nom du fichier ou chemin d'acces ? ")
+        filename = eval(input("Quel est le nom du fichier ou chemin d'acces ? "))
         lda = txt2lda(filename)
     
     if mode == 6 :
-        wordkey = input("Entrer le nom du fichier json a ouvrir (sans le .json)")
-        topic = input("Entrer le topic dans lequel s'inscrit ce mot cle : ")
+        wordkey = eval(input("Entrer le nom du fichier json a ouvrir (sans le .json)"))
+        topic = eval(input("Entrer le topic dans lequel s'inscrit ce mot cle : "))
         #tracktweet
         query_fname = ' '.join(wordkey) # string
         safe_fname = format_filename(query_fname)
@@ -301,7 +301,7 @@ while True :
                 list_dico.append(dico)
         print(list_dico)
     if mode == 7 :#Compter le nombre de tweet dans un json
-        filename = input(" Entrer le ficher a compter  : ")
+        filename = eval(input(" Entrer le ficher a compter  : "))
         count = countTweetInJson(filename)
         print(count)
 
