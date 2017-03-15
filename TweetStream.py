@@ -37,7 +37,7 @@ class MyListener(StreamListener):
 
     def __init__(self, fname):
         safe_fname = format_filename(fname)
-        self.outfile = "stream_%s.json" % safe_fname
+        self.outfile = "%s.json" % safe_fname
         self.count = 0
     def on_data(self, data):
         try:
@@ -72,7 +72,7 @@ def convert_valid(one_char):
     if one_char in valid_chars:
         return one_char
     else:
-        return '_'
+        return ''
 
 
 #query = sys.argv[1:] # list of CLI arguments
