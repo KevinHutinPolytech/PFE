@@ -32,7 +32,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.secure = True
 auth.set_access_token(access_token, access_secret) 
 api = tweepy.API(auth)
-
+print("Connecté à l'API Twitter. \n", "Auth : ",auth, "API : ", api)
 
 #############################FONCTIONS####################################
 
@@ -51,7 +51,7 @@ class MyListener(StreamListener):
         except BaseException as e:
             print("quot;Error on_data: %s&quot;" % str(e))
             return True
- 
+        
     def on_error(self, status):
         print(status)
         return True
@@ -227,10 +227,10 @@ while True :
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
     mode = input("Quel mode choisir ? ")
-    print(mode)
-    if ( mode == 1 ) :
-        query = input("Entrer la chaine de charactere a tracker : ")
-        tracker(query)
+    if mode == 1  :
+        query = input("Entrer les mots cle a tracker : ")
+        words = [word for word in query.split()]
+        tracker(words)
     if mode == 2 :
         basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
         filename = input(" Nom fichier json : ")
@@ -277,7 +277,7 @@ while True :
         lda = txt2lda(filename)
     
     if mode == 6 :
-        wordkey = input("Entrer la chaine a tracker : ")
+        wordkey = input("Entrer le nom du fichier json a ouvrir (sans le .json)")
         topic = input("Entrer le topic dans lequel s'inscrit ce mot cle : ")
         #tracktweet
         query_fname = ' '.join(wordkey) # string
