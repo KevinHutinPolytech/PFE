@@ -114,12 +114,30 @@ class VoteClassifier(ClassifierI):
 all_words = []
 documents = []
 
-
+for p in short_pos.split('\n'):
+    documents.append( (p, "pos") )
+    words = word_tokenize(p)
+    pos = nltk.pos_tag(words)
+    for w in pos:
+        if w[1][0] in allowed_word_types:
+            all_words.append(w[0].lower())
 #  j is adject, r is adverb, and v is verb
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:    
     for line in f :
+        
+        documents.append( (line, "pos") )
+        print("documents" , document)
+        words = word_tokenize(line)
+        print("words" , words,"type", type(words))
+        pos = nltk.pos_tag(words)
+        print("pos" , pos, "type",type(pos))
+        for w in pos:
+            if w[1][0] in allowed_word_types:
+                all_words.append(w[0].lower())
+        
+        
         texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
         # remove words that appear only once            
         frequency = defaultdict(int)
