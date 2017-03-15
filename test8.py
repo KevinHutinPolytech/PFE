@@ -121,7 +121,7 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
     for line in f :
         
         documents.append( (line, "pos") )
-        print("documents" , document)
+        print("documents" , documents)
         words = word_tokenize(line)
         print("words" , words,"type", type(words))
         pos = nltk.pos_tag(words)
