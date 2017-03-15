@@ -32,7 +32,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.secure = True
 auth.set_access_token(access_token, access_secret) 
 api = tweepy.API(auth)
-print("Connecté à l'API Twitter. \n", "Auth : ",auth, "API : ", api)
+print("Connecté à l'API Twitter. \n", "Auth : ",auth, " \n API : ", api)
 
 #############################FONCTIONS####################################
 
@@ -219,6 +219,7 @@ def txt2lda(monfichier):
 ######################################## MAIN ################################
 
 while True :
+    mode = 1
     print("1 : Tracker des tweet sur twitter ")
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
@@ -226,7 +227,7 @@ while True :
     print('5 : Créer un corpus avec le model LDA')    
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
-    mode = input("Quel mode choisir ? ")
+    #mode = input("Quel mode choisir ? ")
     if mode == 1  :
         query = input("Entrer les mots cle a tracker : ")
         words = [word for word in query.split()]
@@ -303,4 +304,4 @@ while True :
         filename = input(" Entrer le ficher a compter  : ")
         count = countTweetInJson(filename)
         print(count)
-        
+    if mode == 
