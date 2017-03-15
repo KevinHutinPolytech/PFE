@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from unidecode import unidecode
 import nltk
+import re
 import random
 #from nltk.corpus import movie_reviews
 from nltk.classify.scikitlearn import SklearnClassifier
