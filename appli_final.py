@@ -201,7 +201,7 @@ def txt2lda(monfichier):
         print("LDA généré")
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
-        doc_bow = dictionary.doc2bow(text2tokens(doc.decode('unicode-escape'),"s"))
+        doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
         print(lda[doc_bow]) # get topic probability distribution for a document
         vec_lda = lda[doc_bow]
         for i in vec_lda : 
