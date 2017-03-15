@@ -227,7 +227,8 @@ while True :
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
     mode = input("Quel mode choisir ? ")
-    if mode == 1 :
+    print(mode)
+    if ( mode == 1 ) :
         query = input("Entrer la chaine de charactere a tracker : ")
         tracker(query)
     if mode == 2 :
