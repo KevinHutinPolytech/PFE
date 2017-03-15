@@ -1,3 +1,43 @@
+# coding: utf8
+from __future__ import unicode_literals
+import operator 
+import json
+import sys
+from collections import Counter
+import re
+import nltk
+from nltk.tokenize import word_tokenize
+import redis
+from nltk.corpus import stopwords
+import string
+from nltk import bigrams 
+from unidecode import unidecode
+from nltk.stem.snowball import SnowballStemmer
+import os
+from collections import defaultdict
+from pprint import pprint  # pretty-printer
+from gensim import models ,corpora, similarities
+import tweepy
+import time
+from tweepy import Stream
+from tweepy.streaming import StreamListener
+
+def format_filename(fname):
+    """Convert fname into a safe string for a file name.
+    Return: string
+    """
+    return ''.join(convert_valid(one_char) for one_char in fname)
+
+def convert_valid(one_char):
+    """Convert a character into '' if "invalid".
+    Return: string
+    """
+    valid_chars = "-_.%s%s" % (string.ascii_letters, string.digits)
+    if one_char in valid_chars:
+        return one_char
+    else:
+        return ''
+
 def getTweetText(tweet):
         
     try:
