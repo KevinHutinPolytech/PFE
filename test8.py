@@ -85,6 +85,8 @@ def text2tokens(text,mode):
         print("Problème dans la tokenisation du text")
         print("texte : ",text, "Type : ", type(text), "Mode : ",mode)
         pass
+    
+    
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
         self._classifiers = classifiers
@@ -125,8 +127,8 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
             for token in text:
                 frequency[token] += 1
         texts = [[token for token in text if frequency[token] > 1] for text in texts]
-        pos = nltk.pos_tag(words)
-        print("Words : " , words , "POS : " ,pos)
+        pos = nltk.pos_tag(texts)
+        print("Words : " , texts , "POS : " ,pos)
         for w in pos:
             if w[1][0] in allowed_word_types:
                 all_words.append(w[0].lower())
