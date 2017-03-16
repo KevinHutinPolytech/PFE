@@ -130,7 +130,7 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
             frequency[token] += 1
 
     for text in texts:
-        documents.append(text)
+       
         for token in text :
             if frequency[token] > 1:
                 all_words.append(token)
