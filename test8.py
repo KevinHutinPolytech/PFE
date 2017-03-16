@@ -198,7 +198,8 @@ save_classifier.close()
 
 LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
 LogisticRegression_classifier.train(training_set)
-print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+print(LogisticRegression_classifier)
+#print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 LogisticRegression_classifier.show_most_informative_features(15)
 
 save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
