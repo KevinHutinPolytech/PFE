@@ -119,7 +119,7 @@ documents = []
 allowed_word_types = ["J"]
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
     for line in f :
-        document.append(line)
+        documents.append(line)
     
     texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
     
@@ -129,8 +129,7 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
         for token in text:
             frequency[token] += 1
 
-    for text in texts:
-       
+    for text in texts:       
         for token in text :
             if frequency[token] > 1:
                 all_words.append(token)
