@@ -118,6 +118,9 @@ documents = []
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
+    for line in f :
+        document.append(line)
+    
     texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
     
     # remove words that appear only once            
