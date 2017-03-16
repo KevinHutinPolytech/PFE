@@ -262,6 +262,8 @@ while True :
     print('5 : Créer un corpus avec le model LDA')    
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
+    print('8 : Classifier des documents')
+    
     mode = eval(input("Quel mode choisir ? "))
     if mode == 1 :
         query = eval(input("Entrer les mots cle a tracker : "))
@@ -342,6 +344,7 @@ while True :
     if mode == 8 :#Classify
         all_words = []
         documents = []
+        addDoc = 1
         while addDoc :
             addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
             filename = eval(input("Entrer le nom du fichier a uploader : "))
