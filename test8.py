@@ -117,7 +117,7 @@ texts = []
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:     
     frequency = defaultdict(int)
     for line in f :
-        documents.append(line)
+        documents.append((line,"emploi"))
         texts.append([tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ])
     
    # texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ]  for line in f ]
@@ -133,7 +133,27 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
         for token in text :
             if frequency[token] > 1:
                 all_words.append(token)
+                
+with open("economie.txt",'r',encoding='utf-8',errors='replace') as f:     
+    frequency = defaultdict(int)
+    for line in f :
+        documents.append((line,"economie"))
+        texts.append([tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ])
     
+   # texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ]  for line in f ]
+    
+    
+    # remove words that appear only once            
+    
+    for text in texts:
+        for token in text:
+            frequency[token] += 1
+
+    for text in texts:       
+        for token in text :
+            if frequency[token] > 1:
+                all_words.append(token)
+                
 save_documents = open("documents.pickle","wb")
 pickle.dump(documents, save_documents)
 save_documents.close()
@@ -157,7 +177,7 @@ def find_features(document):
         features[w] = (w in words)
     return features # Retourne un dict ou chaque mot est une clé
 
-featuresets = [(find_features(rev),'emploi') for rev in documents]# Retourne une liste de dict ou chaque mot est une clé
+featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
 print("featuresets : ", featuresets)
 
 random.shuffle(featuresets)
