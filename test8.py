@@ -150,14 +150,13 @@ save_word_features.close()
 
 
 def find_features(document):
-    words = word_tokenize(document)
+    words = text2tokens(document,"t")
     features = {}
     for w in word_features:
         features[w] = (w in words)
+    return features # Retourne un dict ou chaque mot est une clé
 
-    return features
-
-featuresets = [find_features(rev) for rev in documents]
+featuresets = [find_features(rev) for rev in documents]# Retourne une liste de dict ou chaque mot est une clé
 print("featuresets : ", featuresets)
 
 random.shuffle(featuresets)
