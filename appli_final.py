@@ -345,57 +345,57 @@ while True :
         all_words = []
         documents = []
         addDoc = 1
-        while addDoc :
-            addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
+        while addDoc :            
             filename = eval(input("Entrer le nom du fichier a uploader : "))
             topic = eval(input("Entrer le topic du document : "))
-            updateDocAllwords(filename,topic,documents,allwords)
+            updateDocAllwords(filename,topic,documents,all_words)
+            addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
 
-            all_words_dict = nltk.FreqDist(all_words)
-            #print("ALL_WORDS : ", all_words_dict)
+        all_words_dict = nltk.FreqDist(all_words)
+        #print("ALL_WORDS : ", all_words_dict)
 
-            word_features = list(all_words_dict.keys())[:5000]
-            #print("word_features : ", word_features)
+        word_features = list(all_words_dict.keys())[:5000]
+        #print("word_features : ", word_features)
 
-            save_word_features = open("word_features5k.pickle","wb")
-            pickle.dump(word_features, save_word_features)
-            save_word_features.close()
-            
-            featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
-            #print("featuresets : ", featuresets)
+        save_word_features = open("word_features5k.pickle","wb")
+        pickle.dump(word_features, save_word_features)
+        save_word_features.close()
 
-            random.shuffle(featuresets)
-            #print(len(featuresets))
+        featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
+        #print("featuresets : ", featuresets)
 
-            testing_set = featuresets[10000:]
-            training_set = featuresets[:10000]
-            
-            try :
-                classifier = nltk.NaiveBayesClassifier.train(training_set)
-                print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
-                classifier.show_most_informative_features(15)
+        random.shuffle(featuresets)
+        #print(len(featuresets))
 
-                ###############
-                save_classifier = open("originalnaivebayes5k.pickle","wb")
-                pickle.dump(classifier, save_classifier)
-                save_classifier.close()
-            except :
-                print("Pb dans le NaiveBayesClassifier")
-                
-            try :
-                LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
-                LogisticRegression_classifier.train(training_set)
-                print(LogisticRegression_classifier)
-                LogisticRegression_classifier.fit(training_set)
-                print(LogisticRegression_classifier)
-                #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
-                LogisticRegression_classifier.show_most_informative_features(15)
+        testing_set = featuresets[10000:]
+        training_set = featuresets[:10000]
 
-                save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
-                pickle.dump(LogisticRegression_classifier, save_classifier)
-                save_classifier.close()
-            except :
-                print("Pb dans le LogisticRegression_classifier")
-                
-                
-        
+        try :
+            classifier = nltk.NaiveBayesClassifier.train(training_set)
+            print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
+            classifier.show_most_informative_features(15)
+
+            ###############
+            save_classifier = open("originalnaivebayes5k.pickle","wb")
+            pickle.dump(classifier, save_classifier)
+            save_classifier.close()
+        except :
+            print("Pb dans le NaiveBayesClassifier")
+
+        try :
+            LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
+            LogisticRegression_classifier.train(training_set)
+            print(LogisticRegression_classifier)
+            LogisticRegression_classifier.fit(training_set)
+            print(LogisticRegression_classifier)
+            #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+            LogisticRegression_classifier.show_most_informative_features(15)
+
+            save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
+            pickle.dump(LogisticRegression_classifier, save_classifier)
+            save_classifier.close()
+        except :
+            print("Pb dans le LogisticRegression_classifier")
+
+
+
