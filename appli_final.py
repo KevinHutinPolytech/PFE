@@ -14,6 +14,13 @@ import string
 from nltk import bigrams 
 from unidecode import unidecode
 from nltk.stem.snowball import SnowballStemmer
+from nltk.classify.scikitlearn import SklearnClassifier
+import pickle
+from sklearn.naive_bayes import MultinomialNB, BernoulliNB
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.svm import SVC, LinearSVC, NuSVC
+from nltk.classify import ClassifierI
+from statistics import mode
 import os
 from collections import defaultdict
 from pprint import pprint  # pretty-printer
@@ -212,8 +219,35 @@ def txt2lda(monfichier):
         f.close()
     return lda
        
+def updateDocAllwords(filename,topic,documents,allwords):
+    texts = []
+    frequency = defaultdict(int)
+    try:
+        with open(filename,'r',encoding='utf-8',errors='replace') as f:    
+            for line in f :
+                documents.append((line,topic))
+                texts.append([tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ])
+
+            # remove words that appear only once   
+            for text in texts:
+                for token in text:
+                    frequency[token] += 1
+            for text in texts:       
+                for token in text :
+                    if frequency[token] > 1:
+                        allwords.append(token)
+            save_documents = open("documents.pickle","wb")
+            pickle.dump(documents, save_documents)
+            save_documents.close()
+    except: 
+        print("Erreur dans updateDocAllwords \n","filename : ",filename ,"topic : ",topic,"documents : ",documents,"allwords : ",allwords)
         
-    
+def find_features(document):
+    words = text2tokens(document,"t")
+    features = {}
+    for w in word_features:
+        features[w] = (w in words)
+    return features # Retourne un dict ou chaque mot est une clé    
        
 
 
@@ -305,4 +339,60 @@ while True :
         filename = eval(input(" Entrer le ficher a compter  : "))
         count = countTweetInJson(filename)
         print(count)
+    if mode == 8 :#Classify
+        all_words = []
+        documents = []
+        while addDoc :
+            addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
+            filename = eval(input("Entrer le nom du fichier a uploader : "))
+            topic = eval(input("Entrer le topic du document : "))
+            updateDocAllwords(filename,topic,documents,allwords)
 
+            all_words_dict = nltk.FreqDist(all_words)
+            #print("ALL_WORDS : ", all_words_dict)
+
+            word_features = list(all_words_dict.keys())[:5000]
+            #print("word_features : ", word_features)
+
+            save_word_features = open("word_features5k.pickle","wb")
+            pickle.dump(word_features, save_word_features)
+            save_word_features.close()
+            
+            featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
+            #print("featuresets : ", featuresets)
+
+            random.shuffle(featuresets)
+            #print(len(featuresets))
+
+            testing_set = featuresets[10000:]
+            training_set = featuresets[:10000]
+            
+            try :
+                classifier = nltk.NaiveBayesClassifier.train(training_set)
+                print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
+                classifier.show_most_informative_features(15)
+
+                ###############
+                save_classifier = open("originalnaivebayes5k.pickle","wb")
+                pickle.dump(classifier, save_classifier)
+                save_classifier.close()
+            except :
+                print("Pb dans le NaiveBayesClassifier")
+                
+            try :
+                LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
+                LogisticRegression_classifier.train(training_set)
+                print(LogisticRegression_classifier)
+                LogisticRegression_classifier.fit(training_set)
+                print(LogisticRegression_classifier)
+                #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+                LogisticRegression_classifier.show_most_informative_features(15)
+
+                save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
+                pickle.dump(LogisticRegression_classifier, save_classifier)
+                save_classifier.close()
+            except :
+                print("Pb dans le LogisticRegression_classifier")
+                
+                
+        
