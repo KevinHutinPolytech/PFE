@@ -114,16 +114,17 @@ class VoteClassifier(ClassifierI):
 all_words = []
 documents = []
 texts = []
-with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:         
+with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:     
+    frequency = defaultdict(int)
     for line in f :
         documents.append(line)
         texts.append([tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ])
     
    # texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ]  for line in f ]
-    print("TEXTE : ", texts)
+    
     
     # remove words that appear only once            
-    frequency = defaultdict(int)
+    
     for text in texts:
         for token in text:
             frequency[token] += 1
@@ -132,8 +133,7 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
         for token in text :
             if frequency[token] > 1:
                 all_words.append(token)
-    print("all_words",all_words)
-
+    
 save_documents = open("documents.pickle","wb")
 pickle.dump(documents, save_documents)
 save_documents.close()
@@ -157,7 +157,7 @@ def find_features(document):
         features[w] = (w in words)
     return features # Retourne un dict ou chaque mot est une clé
 
-featuresets = [find_features(rev) for rev in documents]# Retourne une liste de dict ou chaque mot est une clé
+featuresets = [(find_features(rev),'emploi') for rev in documents]# Retourne une liste de dict ou chaque mot est une clé
 print("featuresets : ", featuresets)
 
 random.shuffle(featuresets)
