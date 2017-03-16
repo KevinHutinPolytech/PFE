@@ -343,6 +343,7 @@ while True :
         count = countTweetInJson(filename)
         print(count)
     if mode == 8 :#Classify
+        print("Pour le moment seul 'Emploi.txt' et 'economie.txt' peuvent être exploite pour ce module")
         all_words = []
         documents = []
         addDoc = 1
