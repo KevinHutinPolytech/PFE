@@ -115,9 +115,9 @@ all_words = []
 documents = []
 
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
-    for ligne in f :
+    '''for ligne in f :
         print(ligne)
-        documents.append(ligne)
+        documents.append(ligne)'''
     
     texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
     print("TEXTE : ", texts)
