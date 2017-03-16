@@ -113,13 +113,13 @@ class VoteClassifier(ClassifierI):
 # move this up here
 all_words = []
 documents = []
-
-with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
-    '''for line in f :
-        print(line)
-        documents.append(line)'''
+texts = []
+with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:         
+    for line in f :
+        documents.append(line)
+        texts.append([tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ])
     
-    texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] documents.append(line) for line in f ]
+   # texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ]  for line in f ]
     print("TEXTE : ", texts)
     
     # remove words that appear only once            
