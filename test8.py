@@ -178,10 +178,10 @@ def find_features(document):
     return features # Retourne un dict ou chaque mot est une clé
 
 featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
-print("featuresets : ", featuresets)
+#print("featuresets : ", featuresets)
 
 random.shuffle(featuresets)
-print(len(featuresets))
+#print(len(featuresets))
 
 testing_set = featuresets[10000:]
 training_set = featuresets[:10000]
@@ -196,25 +196,10 @@ save_classifier = open("originalnaivebayes5k.pickle","wb")
 pickle.dump(classifier, save_classifier)
 save_classifier.close()
 
-MNB_classifier = SklearnClassifier(MultinomialNB())
-MNB_classifier.train(training_set)
-print("MNB_classifier accuracy percent:", (nltk.classify.accuracy(MNB_classifier, testing_set))*100)
-
-save_classifier = open("MNB_classifier5k.pickle","wb")
-pickle.dump(MNB_classifier, save_classifier)
-save_classifier.close()
-
-BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
-BernoulliNB_classifier.train(training_set)
-print("BernoulliNB_classifier accuracy percent:", (nltk.classify.accuracy(BernoulliNB_classifier, testing_set))*100)
-
-save_classifier = open("BernoulliNB_classifier5k.pickle","wb")
-pickle.dump(BernoulliNB_classifier, save_classifier)
-save_classifier.close()
-
 LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
 LogisticRegression_classifier.train(training_set)
 print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+LogisticRegression_classifier.show_most_informative_features(15)
 
 save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
 pickle.dump(LogisticRegression_classifier, save_classifier)
