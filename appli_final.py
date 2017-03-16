@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import operator 
 import json
 import sys
+import random
 from collections import Counter
 import re
 import nltk
