@@ -119,7 +119,7 @@ with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:
         print(ligne)
         documents.append(ligne)'''
     
-    texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
+    texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ],documents.append(ligne) for line in f ]
     print("TEXTE : ", texts)
     
     # remove words that appear only once            
