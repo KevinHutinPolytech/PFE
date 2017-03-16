@@ -114,14 +114,12 @@ class VoteClassifier(ClassifierI):
 all_words = []
 documents = []
 
-#  j is adject, r is adverb, and v is verb
-#allowed_word_types = ["J","R","V"]
-allowed_word_types = ["J"]
 with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
-    for line in f :
-        documents.append(line)
+    for ligne in f :
+        documents.append(ligne)
     
     texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
+    print(texts)
     
     # remove words that appear only once            
     frequency = defaultdict(int)
