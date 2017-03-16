@@ -117,46 +117,32 @@ documents = []
 #  j is adject, r is adverb, and v is verb
 #allowed_word_types = ["J","R","V"]
 allowed_word_types = ["J"]
-with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:    
-    for line in f :
-        
-        documents.append( (line, "pos") )
-        print("documents" , documents)
-        words = word_tokenize(line)
-        print("words" , words,"type", type(words))
-        pos = nltk.pos_tag(words)
-        print("pos" , pos, "type",type(pos))
-        for w in pos:
-            if w[1][0] in allowed_word_types:
-                all_words.append(w[0].lower())
-        print("all_words",all_words)
-        
-        texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
-        print("texts" , texts,"type", type(texts))
-        # remove words that appear only once            
-        frequency = defaultdict(int)
-        for text in texts:
-            for token in text:
-                frequency[token] += 1
-        texts = [[token for token in text if frequency[token] > 1] for text in texts]
-        print("texts" , texts[0],"type", type(texts[0]))
-        pos = nltk.pos_tag(texts[0])
-        
-        print("Words : " , texts , "POS : " ,pos)
-        for w in pos:
-            if w[1][0] in allowed_word_types:
-                all_words.append(w[0].lower())
+with open("Emploi.txt",'r',encoding='utf-8',errors='replace') as f:           
+    texts = [[tokens for tokens in text2tokens(line,"t") if len(tokens) != 0 ] for line in f ]
+    
+    # remove words that appear only once            
+    frequency = defaultdict(int)
+    for text in texts:
+        for token in text:
+            frequency[token] += 1
+
+    for text in texts:
+        documents.append(text)
+        for token in text :
+            if frequency[token] > 1:
+                all_words.append(token)
+    print("all_words",all_words)
 
 save_documents = open("documents.pickle","wb")
 pickle.dump(documents, save_documents)
 save_documents.close()
 
 
-all_words = nltk.FreqDist(all_words)
-print("ALL_WORDS : ", all_words)
+all_words_dict = nltk.FreqDist(all_words)
+#print("ALL_WORDS : ", all_words_dict)
 
-word_features = list(all_words.keys())[:5000]
-print("word_features : ", word_features)
+word_features = list(all_words_dict.keys())[:5000]
+#print("word_features : ", word_features)
 
 save_word_features = open("word_features5k.pickle","wb")
 pickle.dump(word_features, save_word_features)
@@ -171,7 +157,7 @@ def find_features(document):
 
     return features
 
-featuresets = [(find_features(rev), category) for (rev, category) in documents]
+featuresets = [find_features(rev) for rev in documents]
 print("featuresets : ", featuresets)
 
 random.shuffle(featuresets)
@@ -186,7 +172,7 @@ print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(cla
 classifier.show_most_informative_features(15)
 
 ###############
-save_classifier = open("pickled_algos/originalnaivebayes5k.pickle","wb")
+save_classifier = open("originalnaivebayes5k.pickle","wb")
 pickle.dump(classifier, save_classifier)
 save_classifier.close()
 
@@ -194,7 +180,7 @@ MNB_classifier = SklearnClassifier(MultinomialNB())
 MNB_classifier.train(training_set)
 print("MNB_classifier accuracy percent:", (nltk.classify.accuracy(MNB_classifier, testing_set))*100)
 
-save_classifier = open("pickled_algos/MNB_classifier5k.pickle","wb")
+save_classifier = open("MNB_classifier5k.pickle","wb")
 pickle.dump(MNB_classifier, save_classifier)
 save_classifier.close()
 
@@ -202,7 +188,7 @@ BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
 BernoulliNB_classifier.train(training_set)
 print("BernoulliNB_classifier accuracy percent:", (nltk.classify.accuracy(BernoulliNB_classifier, testing_set))*100)
 
-save_classifier = open("pickled_algos/BernoulliNB_classifier5k.pickle","wb")
+save_classifier = open("BernoulliNB_classifier5k.pickle","wb")
 pickle.dump(BernoulliNB_classifier, save_classifier)
 save_classifier.close()
 
@@ -210,7 +196,7 @@ LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
 LogisticRegression_classifier.train(training_set)
 print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 
-save_classifier = open("pickled_algos/LogisticRegression_classifier5k.pickle","wb")
+save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
 pickle.dump(LogisticRegression_classifier, save_classifier)
 save_classifier.close()
 
@@ -219,7 +205,7 @@ LinearSVC_classifier = SklearnClassifier(LinearSVC())
 LinearSVC_classifier.train(training_set)
 print("LinearSVC_classifier accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
 
-save_classifier = open("pickled_algos/LinearSVC_classifier5k.pickle","wb")
+save_classifier = open("LinearSVC_classifier5k.pickle","wb")
 pickle.dump(LinearSVC_classifier, save_classifier)
 save_classifier.close()
 
@@ -233,4 +219,4 @@ SGDC_classifier = SklearnClassifier(SGDClassifier())
 SGDC_classifier.train(training_set)
 print("SGDClassifier accuracy percent:",nltk.classify.accuracy(SGDC_classifier, testing_set)*100)
 
-save_classifier = open("pickled_algos/SGDC_classifier5k.pickle","wb")
+save_classifier = open("SGDC_classifier5k.pickle","wb")
