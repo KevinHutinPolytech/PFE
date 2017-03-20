@@ -206,6 +206,7 @@ def txt2lda(monfichier):
         lda = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
         print("Génération d'un model LDA...")
         pprint(lda)
+        print(lda.print_topics(num_topics=20,num_words=75))
         print("LDA généré")
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
@@ -369,8 +370,8 @@ while True :
         random.shuffle(featuresets)
         #print(len(featuresets))
 
-        testing_set = featuresets[10000:]
-        training_set = featuresets[:10000]
+        testing_set = featuresets[100:]
+        training_set = featuresets[:100]
 
         try :
             classifier = nltk.NaiveBayesClassifier.train(training_set)
@@ -388,8 +389,8 @@ while True :
             LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
             LogisticRegression_classifier.train(training_set)
             print(LogisticRegression_classifier)
-            LogisticRegression_classifier.fit(training_set)
-            print(LogisticRegression_classifier)
+            #LogisticRegression_classifier.fit(training_set)
+            #print(LogisticRegression_classifier)
             #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
             LogisticRegression_classifier.show_most_informative_features(15)
 
