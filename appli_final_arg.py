@@ -258,7 +258,6 @@ def find_features(document):
 mode = sys.argv[1]
 print(mode)
 print(type(mode))
-]
 print(int(mode))
 print(type(int(mode)))
 if mode == '-h':
