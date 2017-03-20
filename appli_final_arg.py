@@ -321,9 +321,9 @@ if mode == 5 :
 
 if mode == 6 :
     #wordkey = eval(input("Entrer le nom du fichier json a ouvrir (sans le .json)"))
-    wordkey = = sys.arg[2]
+    wordkey = sys.arg[2]
     #topic = eval(input("Entrer le topic dans lequel s'inscrit ce mot cle : "))
-    topic = = sys.arg[3]
+    topic = sys.arg[3]
     #tracktweet
     query_fname = ' '.join(wordkey) # string
     safe_fname = format_filename(query_fname)
