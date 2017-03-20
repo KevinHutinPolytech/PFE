@@ -371,7 +371,7 @@ while True :
         #print(len(featuresets))
 
         testing_set = featuresets[100:]
-        training_set = featuresets[:100]
+        training_set = featuresets[:1008]
 
         try :
             classifier = nltk.NaiveBayesClassifier.train(training_set)
@@ -389,8 +389,8 @@ while True :
             LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
             LogisticRegression_classifier.train(training_set)
             print(LogisticRegression_classifier)
-            #LogisticRegression_classifier.fit(training_set)
-            #print(LogisticRegression_classifier)
+            LogisticRegression_classifier.fit(training_set)
+            print(LogisticRegression_classifier)
             #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
             LogisticRegression_classifier.show_most_informative_features(15)
 
