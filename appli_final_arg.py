@@ -349,8 +349,8 @@ if mode == 8 :#Classify
     all_words = []
     documents = []
     addDoc = 1
-   ''' while addDoc :            
-        filename = eval(input("Entrer le nom du fichier a uploader : "))
+   # while addDoc :            
+   '''     filename = eval(input("Entrer le nom du fichier a uploader : "))
         topic = eval(input("Entrer le topic du document : "))
         updateDocAllwords(filename,topic,documents,all_words)
         addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
