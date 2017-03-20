@@ -206,6 +206,7 @@ def txt2lda(monfichier):
         lda = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
         print("Génération d'un model LDA...")
         pprint(lda)
+        print(lda.print_topics(num_topics=20,num_words=75))
         print("LDA généré")
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
@@ -259,7 +260,7 @@ mode = int(sys.argv[1])
 
 if mode == '-h':
     print('Modes:')
-    print("1 : Tracker des tweet sur twitter ")
+    print("1 : Tracker des tweet sur twitter")
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
     print("4 : tokeniser un text ")
@@ -269,16 +270,16 @@ if mode == '-h':
     print('8 : Classifier des documents')
     
 if mode == 1 :
-    query = eval(input("Entrer les mots cle a tracker : "))
+    query = sys.argv[2:]
     words = [word for word in query.split()]
     tracker(words)
 if mode == 2 :
     basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
-    filename = eval(input(" Nom fichier json : "))
+    filename = sys.argv[2] #Nom du fichier json
     json2redis(filename,basejson)
 if mode == 3 :
     basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
-    filename = eval(input(" Nom fichier json : "))
+    filename = sys.argv[2] #Nom du fichier json
     jsonfile = redis2json(filename,basejson)
 
     for line in jsonfile:            
@@ -314,12 +315,15 @@ if mode == 4 :
 
 
 if mode == 5 :
-    filename = eval(input("Quel est le nom du fichier ou chemin d'acces ? "))
+    
+    filename = sys.arg[2] #nom du fichier ou chemin d'acces ?
     lda = txt2lda(filename)
 
 if mode == 6 :
-    wordkey = eval(input("Entrer le nom du fichier json a ouvrir (sans le .json)"))
-    topic = eval(input("Entrer le topic dans lequel s'inscrit ce mot cle : "))
+    #wordkey = eval(input("Entrer le nom du fichier json a ouvrir (sans le .json)"))
+    wordkey = = sys.arg[2]
+    #topic = eval(input("Entrer le topic dans lequel s'inscrit ce mot cle : "))
+    topic = = sys.arg[3]
     #tracktweet
     query_fname = ' '.join(wordkey) # string
     safe_fname = format_filename(query_fname)
@@ -373,8 +377,8 @@ if mode == 8 :#Classify
     random.shuffle(featuresets)
     #print(len(featuresets))
 
-    testing_set = featuresets[10000:]
-    training_set = featuresets[:10000]
+    testing_set = featuresets[100:]
+    training_set = featuresets[:1000]
 
     try :
         classifier = nltk.NaiveBayesClassifier.train(training_set)
