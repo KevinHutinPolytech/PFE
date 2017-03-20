@@ -268,7 +268,6 @@ if mode == '-h':
     print('7 : Compte le nombre de tweet dans un fichier json')
     print('8 : Classifier des documents')
     
-   
 if mode == 1 :
     query = eval(input("Entrer les mots cle a tracker : "))
     words = [word for word in query.split()]
@@ -345,7 +344,7 @@ if mode == 7 :#Compter le nombre de tweet dans un json
     filename = eval(input(" Entrer le ficher a compter  : "))
     count = countTweetInJson(filename)
     print(count)
- if mode == 8 :#Classify
+if mode == 8 :#Classify
     print("Pour le moment seul 'Emploi.txt' et 'economie.txt' peuvent être exploite pour ce module")
     all_words = []
     documents = []
@@ -355,7 +354,7 @@ if mode == 7 :#Compter le nombre de tweet dans un json
         topic = eval(input("Entrer le topic du document : "))
         updateDocAllwords(filename,topic,documents,all_words)
         addDoc = eval(input("Voulez vous ajouter un document ? (1: oui | 0: non)"))
-'''
+    '''
     filename = sys.argv[2]
     topic = sys.argv[3]
     updateDocAllwords(filename,topic,documents,all_words)
