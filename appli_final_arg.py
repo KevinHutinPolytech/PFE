@@ -255,11 +255,8 @@ def find_features(document):
 ######################################## MAIN ################################
 
 
-mode = sys.argv[1]
-print(mode)
-print(type(mode))
-print(int(mode))
-print(type(int(mode)))
+mode = int(sys.argv[1])
+
 if mode == '-h':
     print('Modes:')
     print("1 : Tracker des tweet sur twitter ")
