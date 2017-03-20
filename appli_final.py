@@ -203,7 +203,7 @@ def txt2lda(monfichier):
         print(corpus)
         print(len(texts))
         
-        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
+        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=10)
         print("Génération d'un model LDA...")
         pprint(lda)
         print("LDA généré")
