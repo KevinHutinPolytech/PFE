@@ -258,7 +258,7 @@ def find_features(document):
 mode = sys.argv[1]
 
 if mode == '-h':
-    print('Modes:")
+    print('Modes:')
     print("1 : Tracker des tweet sur twitter ")
     print("2 : Stocker JSON dans redis ")
     print("3 : Recuperer texte d'un JSON provenant de redis ")
