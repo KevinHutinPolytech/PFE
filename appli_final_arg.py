@@ -255,8 +255,8 @@ def find_features(document):
 ######################################## MAIN ################################
 
 
-mode = sys.argv[1]
-
+mode = sys.argv[0]
+print(mode)
 if mode == '-h':
     print('Modes:')
     print("1 : Tracker des tweet sur twitter ")
@@ -349,12 +349,12 @@ if mode == 8 :#Classify
     all_words = []
     documents = []
     addDoc = 1
-    filename = sys.argv[2]
-    topic = sys.argv[3]
+    filename = sys.argv[1]
+    topic = sys.argv[2]
     updateDocAllwords(filename,topic,documents,all_words)
     
-    filename = sys.argv[4]
-    topic = sys.argv[5]
+    filename = sys.argv[3]
+    topic = sys.argv[4]
     updateDocAllwords(filename,topic,documents,all_words)
     
     all_words_dict = nltk.FreqDist(all_words)
