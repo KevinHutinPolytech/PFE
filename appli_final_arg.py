@@ -168,7 +168,7 @@ def text2tokens(text,mode):
     tokens that are not emoticons (e.g. :D doesn’t become :d).
     """
     punctuation = list(string.punctuation)
-    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt',"l'","d'","c'"] # Liste des tokens à effacer
+    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt'] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
     try:
@@ -207,6 +207,8 @@ def txt2lda(monfichier):
         print("Génération d'un model LDA...")
         pprint(lda)
         print(lda.print_topics(num_topics=20,num_words=75))
+        print(lda.get_topic_terms(19, topn=10))
+        print(type(lda.get_topic_terms(19, topn=10)))
         print("LDA généré")
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
