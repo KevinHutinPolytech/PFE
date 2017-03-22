@@ -268,145 +268,163 @@ if mode == '-h':
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
     print('8 : Classifier des documents')
-    
-mode = int(mode)    
-if mode == 1 :
-    query = sys.argv[2:]
-    words = [word for word in query.split()]
-    tracker(words)
-if mode == 2 :
-    basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
-    filename = sys.argv[2] #Nom du fichier json
-    json2redis(filename,basejson)
-if mode == 3 :
-    basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
-    filename = sys.argv[2] #Nom du fichier json
-    jsonfile = redis2json(filename,basejson)
+else :    
+    mode = int(mode)    
+    if mode == 1 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("Entrer en argument les mots clés à tracker")
+        else :    
+            query = sys.argv[2:]
+            words = [word for word in query.split()]
+            tracker(words)
+    if mode == 2 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("Entrer en argument le nom du fichier json à stocker dans redis")
+        else :    
+            basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
+            filename = sys.argv[2] #Nom du fichier json
+            json2redis(filename,basejson)
+    if mode == 3 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("Entrer en argument le nom du fichier json à récupérer de redis")
+        else :    
+            basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
+            filename = sys.argv[2] #Nom du fichier json
+            jsonfile = redis2json(filename,basejson)
 
-    for line in jsonfile:            
-        print('line')
-        print(type(line))
-        # tweet = json2tweet(line)
-        text = getTweetText(line)#.decode('unicode-escape')
-        print(text)
+            for line in jsonfile:            
+                print('line')
+                print(type(line))
+                # tweet = json2tweet(line)
+                text = getTweetText(line)#.decode('unicode-escape')
+                print(text)
 
-if mode == 4 :
-    print('1 : tokeniser un fichier .txt')
-    print('2 : tokeniser un une chaine de caractere')
-    sousmode = eval(input("Quel mode choisir ? "))
-    if sousmode == 1 :        
-        filename = eval(input("Quel est le nom du fichier ou chemain d'acces ? "))
-        try :
-            with open(filename,'r') as f:    
-                for line in f:        
-                    tokens = text2tokens(line.decode('unicode-escape'),"s")
+    if mode == 4 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("4 1 'monfichier.txt': tokeniser un fichier .txt")
+            print("4 2 'machainedecharactere' : tokeniser un une chaine de caractere")            
+        else : 
+            sousmode = int(sys.argv[2])
+            if sousmode == 1 :        
+                filename = sys.argv[3]
+                try :
+                    with open(filename,'r') as f:    
+                        for line in f:        
+                            tokens = text2tokens(line.decode('unicode-escape'),"s")
+                            print(tokens)
+                except :
+                    print(" Erreur 4 1 'monfichier.txt' ", "Filename : ",filename, " Type : " , type(filename))
+                    print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
+                        
+            if sousmode == 2 :        
+                chaine = sys.argv[3:]
+                try :                                        
+                    tokens = text2tokens(chaine.decode('unicode-escape'),"s")
                     print(tokens)
-        except :
-            print(" Erreur 41 ")
-            print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
-
-    if sousmode == 2 :        
-        chaine = eval(input("Entrez la chaine de caractere :  "))
-        try :                                        
-            tokens = text2tokens(chaine.decode('unicode-escape'),"s")
-            print(tokens)
-        except :
-            print(" Erreur 42 ")
-            pass
+                except :
+                    print("Erreur 4 2 Chaine : \n","Chaine :", chaine, " Type : " , type(chaine))
+                    pass
 
 
-if mode == 5 :
-    
-    filename = sys.arg[2] #nom du fichier ou chemin d'acces ?
-    lda = txt2lda(filename)
+    if mode == 5 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("'monfichier.txt': Nom du fichier pour le corpus lda")                       
+        else : 
+            filename = sys.arg[2] #nom du fichier ou chemin d'acces ?
+            lda = txt2lda(filename)
 
-if mode == 6 :
-    #wordkey = eval(input("Entrer le nom du fichier json a ouvrir (sans le .json)"))
-    wordkey = sys.arg[2]
-    #topic = eval(input("Entrer le topic dans lequel s'inscrit ce mot cle : "))
-    topic = sys.arg[3]
-    #tracktweet
-    query_fname = ' '.join(wordkey) # string
-    safe_fname = format_filename(query_fname)
-    filename = "%s.json" % safe_fname
-    list_dico =[]
-    count = 0
-    with open(filename,'r') as f:    
-        for line in f:        
-            count = count +1
-            text = getTweetText(line)
-            print(text)
-            tokens = text2tokens(text,"t")
-            stems = text2tokens(text,"s")
-            dico = {}
-            dico["id_tweet"] = count
-            dico["tokens"] = tokens
-            dico["stems"] = stems
-            dico["topic"] = topic
-            list_dico.append(dico)
-    print(list_dico)
-if mode == 7 :#Compter le nombre de tweet dans un json
-    filename = eval(input(" Entrer le ficher a compter  : "))
-    count = countTweetInJson(filename)
-    print(count)
-if mode == 8 :#Classify
-    print("Pour le moment seul 'Emploi.txt' et 'economie.txt' peuvent être exploite pour ce module")
-    all_words = []
-    documents = []
-    addDoc = 1
-    filename = sys.argv[2]
-    topic = sys.argv[3]
-    updateDocAllwords(filename,topic,documents,all_words)
-    
-    filename = sys.argv[4]
-    topic = sys.argv[5]
-    updateDocAllwords(filename,topic,documents,all_words)
-    
-    all_words_dict = nltk.FreqDist(all_words)
-    #print("ALL_WORDS : ", all_words_dict)
+    if mode == 6 :
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("monfichier.json topic : Nom du fichier json a traiter suivie de son topic")                       
+        else : 
+            wordkey = sys.arg[2]
+            topic = sys.arg[3]
+            #tracktweet
+            query_fname = ' '.join(wordkey) # string
+            safe_fname = format_filename(query_fname)         
+            list_dico =[]
+            count = 0
+            with open(safe_fname,'r') as f:    
+                for line in f:        
+                    count = count +1
+                    text = getTweetText(line)
+                    print(text)
+                    tokens = text2tokens(text,"t")
+                    stems = text2tokens(text,"s")
+                    dico = {}
+                    dico["id_tweet"] = count
+                    dico["tokens"] = tokens
+                    dico["stems"] = stems
+                    dico["topic"] = topic
+                    list_dico.append(dico)
+            print(list_dico)
+    if mode == 7 :#Compter le nombre de tweet dans un json
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("monfichier.json : Nom du fichier json a traiter ")                       
+        else :             
+            count = countTweetInJson(filename)
+            print(count)
+    if mode == 8 :#Classify
+        if sys.argv[2] = '-h' or sys.argv[2] = '':
+            print("monfichier1.txt topic1 monfichier2.txt topic2 : Nom des fichier .txt a traiter suivie de leurs topics")                   
+            print("Pour le moment seul 'Emploi.txt' et 'economie.txt' peuvent être exploite pour ce module")
+        else : 
+            all_words = []
+            documents = []
+            addDoc = 1
+            filename = sys.argv[2]
+            topic = sys.argv[3]
+            updateDocAllwords(filename,topic,documents,all_words)
 
-    word_features = list(all_words_dict.keys())[:5000]
-    #print("word_features : ", word_features)
+            filename = sys.argv[4]
+            topic = sys.argv[5]
+            updateDocAllwords(filename,topic,documents,all_words)
 
-    save_word_features = open("word_features5k.pickle","wb")
-    pickle.dump(word_features, save_word_features)
-    save_word_features.close()
+            all_words_dict = nltk.FreqDist(all_words)
+            #print("ALL_WORDS : ", all_words_dict)
 
-    featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
-    #print("featuresets : ", featuresets)
+            word_features = list(all_words_dict.keys())[:500]
+            #print("word_features : ", word_features)
 
-    random.shuffle(featuresets)
-    #print(len(featuresets))
+            save_word_features = open("word_features5k.pickle","wb")
+            pickle.dump(word_features, save_word_features)
+            save_word_features.close()
 
-    testing_set = featuresets[100:]
-    training_set = featuresets[:1000]
+            featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
+            #print("featuresets : ", featuresets)
 
-    try :
-        classifier = nltk.NaiveBayesClassifier.train(training_set)
-        print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
-        classifier.show_most_informative_features(15)
+            random.shuffle(featuresets)
+            #print(len(featuresets))
 
-        ###############
-        save_classifier = open("originalnaivebayes5k.pickle","wb")
-        pickle.dump(classifier, save_classifier)
-        save_classifier.close()
-    except :
-        print("Pb dans le NaiveBayesClassifier")
+            testing_set = featuresets[100:]
+            training_set = featuresets[:1000]
 
-    try :
-        LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
-        LogisticRegression_classifier.train(training_set)
-        print(LogisticRegression_classifier)
-        LogisticRegression_classifier.fit(training_set)
-        print(LogisticRegression_classifier)
-        #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
-        LogisticRegression_classifier.show_most_informative_features(15)
+            try :
+                classifier = nltk.NaiveBayesClassifier.train(training_set)
+                print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
+                classifier.show_most_informative_features(15)
 
-        save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
-        pickle.dump(LogisticRegression_classifier, save_classifier)
-        save_classifier.close()
-    except :
-        print("Pb dans le LogisticRegression_classifier")
+                ###############
+                save_classifier = open("originalnaivebayes5k.pickle","wb")
+                pickle.dump(classifier, save_classifier)
+                save_classifier.close()
+            except :
+                print("Pb dans le NaiveBayesClassifier")
+
+            try :
+                LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
+                LogisticRegression_classifier.train(training_set)
+                print(LogisticRegression_classifier)
+                #LogisticRegression_classifier.fit(training_set)
+                #print(LogisticRegression_classifier)
+                #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+                LogisticRegression_classifier.show_most_informative_features(15)
+
+                save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
+                pickle.dump(LogisticRegression_classifier, save_classifier)
+                save_classifier.close()
+            except :
+                print("Pb dans le LogisticRegression_classifier")
 
 
 
