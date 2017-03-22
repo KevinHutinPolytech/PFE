@@ -308,10 +308,10 @@ else :
             if sousmode == 1 :        
                 filename = sys.argv[3]
                 try :
-                    with open(filename,'r') as f:    
+                    with open(monfichier,'r',encoding='utf-8',errors='replace') as f:    
                         for line in f:        
-                            tokens = text2tokens(line.decode('unicode-escape'),"s")
-                            print(tokens)
+                            tokens = text2tokens(line,"t")
+                            print("Tokens: \n",tokens)
                 except :
                     print(" Erreur 4 1 'monfichier.txt' ", "Filename : ",filename, " Type : " , type(filename))
                     print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
@@ -319,8 +319,8 @@ else :
             if sousmode == 2 :        
                 chaine = sys.argv[3]
                 try :                                        
-                    tokens = text2tokens(chaine.decode('unicode-escape'),"s")
-                    print(tokens)
+                    tokens = text2tokens(chaine,"t")
+                    print("Tokens: \n",tokens)
                 except :
                     print("Erreur 4 2 Chaine : \n","Chaine :", chaine, " Type : " , type(chaine))
                     pass
