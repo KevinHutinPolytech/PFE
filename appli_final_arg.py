@@ -168,7 +168,7 @@ def text2tokens(text,mode):
     tokens that are not emoticons (e.g. :D doesn’t become :d).
     """
     punctuation = list(string.punctuation)
-    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt'] # Liste des tokens à effacer
+    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt',"l'","d'","c'"] # Liste des tokens à effacer
 
     stemmer = SnowballStemmer('french')
     try:
@@ -256,9 +256,9 @@ def find_features(document):
 ######################################## MAIN ################################
 
 
-mode = int(sys.argv[1])
+mode = sys.argv[1]
 
-if mode == '-h':
+if mode == '-h':    
     print('Modes:')
     print("1 : Tracker des tweet sur twitter")
     print("2 : Stocker JSON dans redis ")
@@ -269,6 +269,7 @@ if mode == '-h':
     print('7 : Compte le nombre de tweet dans un fichier json')
     print('8 : Classifier des documents')
     
+mode = int(mode)    
 if mode == 1 :
     query = sys.argv[2:]
     words = [word for word in query.split()]
