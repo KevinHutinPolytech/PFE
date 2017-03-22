@@ -317,7 +317,7 @@ else :
                     print("le nom du fichier doit être de la forme 'monfichier.txt' ou '/sousdossier/monfichier.txt' encodé en ANSII")
                         
             if sousmode == 2 :        
-                chaine = sys.argv[3:]
+                chaine = sys.argv[3]
                 try :                                        
                     tokens = text2tokens(chaine.decode('unicode-escape'),"s")
                     print(tokens)
@@ -330,15 +330,15 @@ else :
         if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("'monfichier.txt': Nom du fichier pour le corpus lda")                       
         else : 
-            filename = sys.arg[2] #nom du fichier ou chemin d'acces ?
+            filename = sys.argv[2] #nom du fichier ou chemin d'acces ?
             lda = txt2lda(filename)
 
     if mode == 6 :
         if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("monfichier.json topic : Nom du fichier json a traiter suivie de son topic")                       
         else : 
-            wordkey = sys.arg[2]
-            topic = sys.arg[3]
+            wordkey = sys.argv[2]
+            topic = sys.argv[3]
             #tracktweet
             query_fname = ' '.join(wordkey) # string
             safe_fname = format_filename(query_fname)         
