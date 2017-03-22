@@ -271,21 +271,21 @@ if mode == '-h':
 else :    
     mode = int(mode)    
     if mode == 1 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("Entrer en argument les mots clés à tracker")
         else :    
             query = sys.argv[2:]
             words = [word for word in query.split()]
             tracker(words)
     if mode == 2 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("Entrer en argument le nom du fichier json à stocker dans redis")
         else :    
             basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)  
             filename = sys.argv[2] #Nom du fichier json
             json2redis(filename,basejson)
     if mode == 3 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("Entrer en argument le nom du fichier json à récupérer de redis")
         else :    
             basejson = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
@@ -300,7 +300,7 @@ else :
                 print(text)
 
     if mode == 4 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("4 1 'monfichier.txt': tokeniser un fichier .txt")
             print("4 2 'machainedecharactere' : tokeniser un une chaine de caractere")            
         else : 
@@ -327,14 +327,14 @@ else :
 
 
     if mode == 5 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("'monfichier.txt': Nom du fichier pour le corpus lda")                       
         else : 
             filename = sys.arg[2] #nom du fichier ou chemin d'acces ?
             lda = txt2lda(filename)
 
     if mode == 6 :
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("monfichier.json topic : Nom du fichier json a traiter suivie de son topic")                       
         else : 
             wordkey = sys.arg[2]
@@ -359,13 +359,13 @@ else :
                     list_dico.append(dico)
             print(list_dico)
     if mode == 7 :#Compter le nombre de tweet dans un json
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("monfichier.json : Nom du fichier json a traiter ")                       
         else :             
             count = countTweetInJson(filename)
             print(count)
     if mode == 8 :#Classify
-        if sys.argv[2] = '-h' or sys.argv[2] = '':
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("monfichier1.txt topic1 monfichier2.txt topic2 : Nom des fichier .txt a traiter suivie de leurs topics")                   
             print("Pour le moment seul 'Emploi.txt' et 'economie.txt' peuvent être exploite pour ce module")
         else : 
