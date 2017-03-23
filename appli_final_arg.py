@@ -210,7 +210,7 @@ def txt2lda(monfichier):
         print(type(lda.get_topic_terms(19, topn=10)))
         print("LDA généré")
         print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
-         print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
+        print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
 
         print("Type :",type(lda.show_topics(num_topics=20, num_words=10, log=False, formatted=True)))
         '''
