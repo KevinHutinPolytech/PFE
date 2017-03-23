@@ -152,7 +152,7 @@ def text2tokens(text,mode):
         r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", # hash-tags
         r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', # URLs
      
-        r'(?:(?:\D)', # no numbers
+        r'(?:\D)', # no numbers
         r"(?:[a-z][a-z\-_]+[a-z])", # words with - and 
         r'(?:[\w_]+)', # other words
         r'(?:\S)', # anything else
