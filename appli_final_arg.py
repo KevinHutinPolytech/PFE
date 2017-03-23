@@ -391,25 +391,25 @@ else :
 
             all_words_dict = nltk.FreqDist(all_words)
             #print("ALL_WORDS : ", all_words_dict)
-
+            '''
             word_features = list(all_words_dict.keys())[:500]
             #print("word_features : ", word_features)
             
             save_word_features = open("word_features500.pickle","wb")
             pickle.dump(word_features, save_word_features)
             save_word_features.close()
-            
+            '''
             word_features_lda = []
             ####################### Document 1 ##########################
             lda_model = txt2lda(sys.argv[2])            
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
             lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-            print("lda_features : ",lda_features)
+            #print("lda_features : ",lda_features)
             
             for topic in lda_features :
-                print("Topic ",topic[0],": ", topic) 
+                #print("Topic ",topic[0],": ", topic) 
                 for word in topic[1] :
-                    print("Word: ", word)
+                    #print("Word: ", word)
                     word_features_lda.append(word[0])
             
             
@@ -417,11 +417,11 @@ else :
             lda_model_2 = txt2lda(sys.argv[4])            
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
             lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-            print("lda_features : ",lda_features_2)            
+            #print("lda_features : ",lda_features_2)            
             for topic in lda_features_2 :
-                print("Topic ",topic[0],": ", topic) 
+                #print("Topic ",topic[0],": ", topic) 
                 for word in topic[1] :
-                    print("Word: ", word)
+                    #print("Word: ", word)
                     word_features_lda.append(word[0])
                     
             print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
@@ -449,13 +449,13 @@ else :
 
             LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
             LogisticRegression_classifier.train(training_set)
-            print(LogisticRegression_classifier)
+            print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
             #LogisticRegression_classifier.fit(training_set)
             #print(LogisticRegression_classifier)
             #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
-            print("LogisticRegression_classifier.unicode_repr() :  ",LogisticRegression_classifier.unicode_repr())
-            #LogisticRegression_classifier.show_most_informative_features(15)
 
+            #LogisticRegression_classifier.show_most_informative_features(15)
+    
             save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
             pickle.dump(LogisticRegression_classifier, save_classifier)
             save_classifier.close()
