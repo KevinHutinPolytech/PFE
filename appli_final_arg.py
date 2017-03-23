@@ -205,14 +205,18 @@ def txt2lda(monfichier):
         lda = models.LdaModel(corpus, id2word=dictionary, num_topics=20)
         print("Génération d'un model LDA...")
         pprint(lda)
+        '''
         print(lda.print_topics(num_topics=20,num_words=75))
         print(lda.get_topic_terms(19, topn=10))
         print(type(lda.get_topic_terms(19, topn=10)))
+        '''
         print("LDA généré")
-        print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
+        
+        # Retourne une liste de tuple (idtopic , "0.02*mot1 + 0.02*mot2 + ... + 0.00*motn")
+        #print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
+        
+        #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)      
         print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
-
-        print("Type :",type(lda.show_topics(num_topics=20, num_words=10, log=False, formatted=True)))
         '''
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
@@ -249,7 +253,7 @@ def updateDocAllwords(filename,topic,documents,allwords):
     except: 
         print("Erreur dans updateDocAllwords \n","filename : ",filename ,"topic : ",topic,"documents : ",documents,"allwords : ",allwords)
         
-def find_features(document):
+def find_features(document,word_features):
     words = text2tokens(document,"t")
     features = {}
     for w in word_features:
@@ -390,12 +394,19 @@ else :
 
             word_features = list(all_words_dict.keys())[:500]
             #print("word_features : ", word_features)
-
-            save_word_features = open("word_features5k.pickle","wb")
+            
+            save_word_features = open("word_features500.pickle","wb")
             pickle.dump(word_features, save_word_features)
             save_word_features.close()
-
-            featuresets = [(find_features(rev),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
+            
+            lda_model = text2lda(sys.argv[2])
+            
+            #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
+            lda_features = lda_model.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
+            word_features_lda = [word[0] for word in topic[1]for topic in lda_model]
+            print(word_features_lda)
+            
+            featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
             #print("featuresets : ", featuresets)
 
             random.shuffle(featuresets)
