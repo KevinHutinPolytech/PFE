@@ -403,7 +403,7 @@ else :
             ####################### Document 1 ##########################
             lda_model = txt2lda(sys.argv[2])            
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-            lda_features = lda_model.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
+            lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
             print("lda_features : ",lda_features)
             
             for topic in lda_features :
@@ -416,7 +416,7 @@ else :
             ####################### Document 2 ##########################
             lda_model_2 = txt2lda(sys.argv[4])            
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-            lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
+            lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
             print("lda_features : ",lda_features_2)            
             for topic in lda_features_2 :
                 print("Topic ",topic[0],": ", topic) 
@@ -424,7 +424,7 @@ else :
                     print("Word: ", word)
                     word_features_lda.append(word[0])
                     
-            print(word_features_lda)
+            print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
             
             featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
             #print("featuresets : ", featuresets)
