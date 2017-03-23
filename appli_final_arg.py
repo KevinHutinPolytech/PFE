@@ -216,7 +216,7 @@ def txt2lda(monfichier):
         #print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
         
         #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)      
-        print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
+        #print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
         '''
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
