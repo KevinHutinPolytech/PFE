@@ -399,7 +399,7 @@ else :
             pickle.dump(word_features, save_word_features)
             save_word_features.close()
             
-            lda_model = text2lda(sys.argv[2])
+            lda_model = txt2lda(sys.argv[2])
             
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
             lda_features = lda_model.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
