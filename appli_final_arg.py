@@ -403,9 +403,13 @@ else :
             
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
             lda_features = lda_model.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
+            print("lda_features : ",lda_features)
             word_features_lda = [word[0] for word in topic[1] for topic in lda_features]
-            print("Topic ",topic[0],": ", topic) for topic in lda_features
-            print("Word: ", word) for word in topic[1] for topic in lda_features
+            for topic in lda_features :
+                print("Topic ",topic[0],": ", topic) 
+                for word in topic[1] :
+                    print("Word: ", word)
+            
             print(word_features_lda)
             
             featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
