@@ -404,11 +404,13 @@ else :
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
             lda_features = lda_model.show_topics(num_topics=20, num_words=10, log=False, formatted=False)
             print("lda_features : ",lda_features)
-            word_features_lda = [word[0] for word in topic[1] for topic in lda_features]
+            word_features_lda = []
             for topic in lda_features :
                 print("Topic ",topic[0],": ", topic) 
                 for word in topic[1] :
                     print("Word: ", word)
+                    print("Word: ", type(word))
+                    word_features_lda.append(word[0])
             
             print(word_features_lda)
             
