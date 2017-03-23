@@ -210,6 +210,8 @@ def txt2lda(monfichier):
         print(lda.get_topic_terms(19, topn=10))
         print(type(lda.get_topic_terms(19, topn=10)))
         print("LDA généré")
+        print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
+        print("Type :",type(lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)))
         
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
