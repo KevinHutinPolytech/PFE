@@ -197,13 +197,12 @@ def txt2lda(monfichier):
         texts = [[token for token in text if frequency[token] > 1] for text in texts]
         dictionary = corpora.Dictionary(texts)
         dictionary.save('/tmp/emploi.dict')  # store the dictionary, for future reference
-        print(dictionary)
+        
         corpus = [dictionary.doc2bow(text) for text in texts]
         corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
-        print(corpus)
-        print(len(texts))
         
-        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=len(texts))
+        
+        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=20)
         print("Génération d'un model LDA...")
         pprint(lda)
         print(lda.print_topics(num_topics=20,num_words=75))
@@ -211,8 +210,10 @@ def txt2lda(monfichier):
         print(type(lda.get_topic_terms(19, topn=10)))
         print("LDA généré")
         print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
-        print("Type :",type(lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)))
-        
+         print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
+
+        print("Type :",type(lda.show_topics(num_topics=20, num_words=10, log=False, formatted=True)))
+        '''
         doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
         doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
         print(lda[doc_bow]) # get topic probability distribution for a document
@@ -221,7 +222,7 @@ def txt2lda(monfichier):
             topicid = i[0]
             print(i[0])
             print(lda.get_topic_terms(topicid, topn=10))
-        
+        '''
         f.close()
     return lda
        
