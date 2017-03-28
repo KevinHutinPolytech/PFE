@@ -470,12 +470,16 @@ else :
                 print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
             except :
                 print("classify many erreur \n","Type testing_set: ",type(dictum),"\n testing_set :",dictum) 
-            print("classify many:" , LogisticRegression_classifier.classify_many(dictum))    
+                
             try :
                 print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))
+                for probdisti in LogisticRegression_classifier.prob_classify_many(dictum):
+                    list_of_samples = probdisti.samples()
+                    for sample in list_of_samples:
+                        print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
             except :
                 print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
-            print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))    
+    
             
             save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
             pickle.dump(LogisticRegression_classifier, save_classifier)
