@@ -457,16 +457,17 @@ else :
             print("Labels :",LogisticRegression_classifier.labels())
             print ("Type : ",type(LogisticRegression_classifier))
             
+            dictum = [tupl[0] for tupl in testing_set]
             try :
-                print("classify many:" , LogisticRegression_classifier.classify_many(testing_set))
+                print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
             except :
-                print("classify many erreur \n","Type testing_set: ",type(testing_set),"\n testing_set :",testing_set) 
-            print("classify many:" , LogisticRegression_classifier.classify_many(testing_set))    
+                print("classify many erreur \n","Type testing_set: ",type(dictum),"\n testing_set :",dictum) 
+            print("classify many:" , LogisticRegression_classifier.classify_many(dictum))    
             try :
-                print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(testing_set))
+                print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))
             except :
-                print("prob_classify_many erreur \n","Type testing_set:",type(testing_set)) 
-            print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(testing_set))    
+                print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
+            print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))    
             
             save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
             pickle.dump(LogisticRegression_classifier, save_classifier)
