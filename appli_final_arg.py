@@ -136,12 +136,6 @@ def json2tweet(line):
     return tweet
 
 # Trait un texte en entrer (unicode) et retourne le texte tokeniser (mode = t),  stemmer (mode = s)
-def eliminate_numbers(word):
-...     try:
-...             int(word)
-...             print('true')
-...     except:
-...             print('false')
 
 def text2tokens(text,mode):
     
