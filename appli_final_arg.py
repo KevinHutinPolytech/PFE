@@ -136,6 +136,13 @@ def json2tweet(line):
     return tweet
 
 # Trait un texte en entrer (unicode) et retourne le texte tokeniser (mode = t),  stemmer (mode = s)
+def eliminate_numbers(word):
+...     try:
+...             int(word)
+...             print('true')
+...     except:
+...             print('false')
+
 def text2tokens(text,mode):
     
     emoticons_str = r"""
@@ -173,8 +180,15 @@ def text2tokens(text,mode):
     stemmer = SnowballStemmer('french')
     try:
         tokens = tokens_re.findall(unidecode(text))
-        tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]    
-        terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+        tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]   
+        terms_stop = []
+        for term in tokens:
+            if term not in stop:
+                try:
+                    int(term)
+                except:
+                    terms_stop.append(term)
+        #terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
         if mode == 't' :
             return terms_stop
         if mode == 's' :
