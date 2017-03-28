@@ -456,11 +456,11 @@ else :
 
             print("Labels :",LogisticRegression_classifier.labels())
             print ("Type : ",type(LogisticRegression_classifier))
-            print()
+            
             try :
                 print("classify many:" , LogisticRegression_classifier.classify_many(testing_set))
             except :
-                print("classify many erreur \n","Type testing_set: ",type(testing_set),"\n testing_set :"testing_set) 
+                print("classify many erreur \n","Type testing_set: ",type(testing_set),"\n testing_set :",testing_set) 
             print("classify many:" , LogisticRegression_classifier.classify_many(testing_set))    
             try :
                 print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(testing_set))
