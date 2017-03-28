@@ -454,7 +454,7 @@ else :
             #print(LogisticRegression_classifier)
             print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 
-            LogisticRegression_classifier.labels()
+            print("Labels :",LogisticRegression_classifier.labels())
     
             save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
             pickle.dump(LogisticRegression_classifier, save_classifier)
