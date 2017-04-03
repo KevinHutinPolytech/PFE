@@ -94,6 +94,6 @@ if mode == '-h':
     print('Passez en argument les mots à traiter')
 else :   
     query = sys.argv[1:]
-    words = [word for word in query.split()]
+    words = [word for word in query]
     tracker(words)
     print('done')
