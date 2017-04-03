@@ -85,15 +85,95 @@ def tracker(query):
     twitter_stream = Stream(auth, MyListener(query_fname))
     twitter_stream.filter(track=query, async=True)
     
+def getTweetText(tweet):
+        
+    try:
+        tweet = json.loads(tweet)
+        #print(type(tweet))
+        text = json.dumps(tweet['text'],ensure_ascii = False) # récupere le texte du tweet
+        return text
+    except:
+        print("Probleme dans la récupération du texte")
+        print("Tweet : ",tweet)
+        pass
+
+# Trait un texte en entrer (unicode) et retourne le texte tokeniser (mode = t),  stemmer (mode = s)
+
+def text2tokens(text,mode):
+    
+    emoticons_str = r"""
+        (?:
+            [:=;] # Eyes
+            [oO\-]? # Nose (optional)
+            [D\)\]\(\]/\\OpP] # Mouth
+        )"""
+     
+    regex_str = [
+        emoticons_str,
+        r'<[^>]+>', # HTML tags
+        r'(?:@[\w_]+)', # @-mentions
+        r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", # hash-tags
+        r'http[s]?://(?:[a-z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|(?:%[0-9a-f][0-9a-f]))+', # URLs
+     
+        #r'(?:\D)', # no numbers
+        r"(?:[a-z][a-z\-_]+[a-z])", # words with - and 
+        r'(?:[\w_]+)', # other words
+        r'(?:\S)', # anything else
+        
+    ]
+        
+    tokens_re = re.compile(r'('+'|'.join(regex_str)+')', re.VERBOSE | re.IGNORECASE)
+    emoticon_re = re.compile(r'^'+emoticons_str+'$', re.VERBOSE | re.IGNORECASE)
+    """
+    The regular expressions are compiled with the flags re.VERBOSE, to allow spaces in the regexp to be ignored (see the multi-line emoticons regexp),
+    and re.IGNORECASE to catch both upper and lowercases. The tokenize() function simply catches all the tokens in a string and returns them as a list.
+    This function is used within preprocess(), which is used as a pre-processing chain: in this case we simply add a lowercasing feature for all the
+    tokens that are not emoticons (e.g. :D doesn’t become :d).
+    """
+    punctuation = list(string.punctuation)
+    stop = stopwords.words('french') + punctuation + ['>>','<<','<','>','via','le','les','a','rt'] # Liste des tokens à effacer
+
+    stemmer = SnowballStemmer('french')
+    try:
+        tokens = tokens_re.findall(unidecode(text))
+        tokens = [token if emoticon_re.search(token) else token.lower() for token in tokens]   
+        terms_stop = []
+        for term in tokens:
+            if term not in stop:
+                try:
+                    int(term)
+                except:
+                    terms_stop.append(term)
+        #terms_stop = [term for term in tokens if term not in stop] # Crée une liste avec tout les termes sauf les termes stopé
+        if mode == 't' :
+            return terms_stop
+        if mode == 's' :
+            terms_stem = [stemmer.stem(term) for term in terms_stop ]
+            return terms_stem
+    except:
+        print("Problème dans la tokenisation du text")
+        print("texte : ",text, "Type : ", type(text), "Mode : ",mode)
+        pass
 ######################################## MAIN ################################
 
 
 mode = sys.argv[1]
 
 if mode == '-h':    
-    print('Passez en argument les mots à traiter')
+    print('Passez en argument les mots à tracker')
 else :   
     query = sys.argv[1:]
     words = [word for word in query]
     tracker(words)
-    print('done')
+    
+    safe_fname = format_filename(fname)
+    filename = "%s.json" % safe_fname
+        
+    with open(filename,'r',encoding='utf-8',errors='replace') as f:    
+        for line in f:        
+            m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
+            if m != None :
+                text = getTweetText(line)#.decode('unicode-escape')
+                print("Text : ",text)
+                tokens = text2tokens(text,"s")
+                print("Tokens: \n",tokens)
