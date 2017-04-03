@@ -166,7 +166,8 @@ else :
     words = [word for word in query]
     tracker(words)
     
-    safe_fname = format_filename(fname)
+    query_fname = ' '.join(query) # string
+    safe_fname = format_filename(query_fname)
     filename = "%s.json" % safe_fname
         
     with open(filename,'r',encoding='utf-8',errors='replace') as f:    
@@ -177,3 +178,4 @@ else :
                 print("Text : ",text)
                 tokens = text2tokens(text,"s")
                 print("Tokens: \n",tokens)
+                
