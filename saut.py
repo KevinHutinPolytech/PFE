@@ -96,3 +96,4 @@ else :
     query = sys.argv[1:]
     words = [word for word in query.split()]
     tracker(words)
+    print('done')
