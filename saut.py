@@ -162,22 +162,22 @@ def foundCandidat(tokens):
     fillon = ["francois","fillon"]
     macron = ["macron","emmanuelle"]
     for token in tokens :
-        print(token)
+        #print(token)
         if token in melanchon :
             listofcandidat.append("melanchon")
-            print("melanchon")
+            #print("melanchon")
         if token in hamon :
             listofcandidat.append("hamon")
-            print("hamon")
+            #print("hamon")
         if token in lepen :
             listofcandidat.append("lepen")
-            print("lepen")
+            #print("lepen")
         if token in fillon :
             listofcandidat.append("fillon")
-            print("fillon")
+            #print("fillon")
         if token in macron :
             listofcandidat.append("macron")
-            print("macron")
+            #print("macron")
     return listofcandidat
           
             
@@ -209,8 +209,8 @@ else :
                 print("Text : ",text)
                 tokens = text2tokens(text,"t")
                 print("Tokens: \n",tokens)
-                tokens = text2tokens(text,"s")
-                print("Stems: \n",tokens)
+                stems = text2tokens(text,"s")
+                print("Stems: \n",stems)
                 print("\n")
                 # Fonction qui retourne la liste des candiadats mentionné avec une liste de tokens en entrée 
                 listofcandidat = foundCandidat(tokens)
