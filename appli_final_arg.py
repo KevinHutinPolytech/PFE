@@ -196,7 +196,7 @@ def txt2lda(monfichier):
     
     with open(monfichier,'r',encoding='utf-8',errors='replace') as f:    
         #texts = [[tokens for tokens in text2tokens(line.decode('unicode-escape'),"s") if len(tokens) != 0 ] for line in f ]
-        texts = [[tokens for tokens in text2tokens(line, "s") if len(tokens) != 0] for line in f]
+        texts = [[tokens for tokens in text2tokens(line, "t") if len(tokens) != 0] for line in f]
         # remove words that appear only once            
         frequency = defaultdict(int)
         for text in texts:
