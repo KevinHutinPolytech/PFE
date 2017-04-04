@@ -162,16 +162,22 @@ def foundCandidat(tokens):
     fillon = ["francois","fillon"]
     macron = ["macron","emmanuelle"]
     for token in tokens :
+        print(token)
         if token in melanchon :
             listofcandidat.append("melanchon")
+            print("melanchon")
         if token in hamon :
             listofcandidat.append("hamon")
+            print("hamon")
         if token in lepen :
             listofcandidat.append("lepen")
+            print("lepen")
         if token in fillon :
             listofcandidat.append("fillon")
+            print("fillon")
         if token in macron :
             listofcandidat.append("macron")
+            print("macron")
     return listofcandidat
           
             
