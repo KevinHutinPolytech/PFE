@@ -433,6 +433,9 @@ else :
                     word_features_lda.append(word[0])
                     
             print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
+            save_word_features = open("word_features_lda.pickle","wb")
+            pickle.dump(word_features, save_word_features)
+            save_word_features.close()
             
             featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
             #print("featuresets : ", featuresets)
@@ -482,7 +485,7 @@ else :
                 print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
     
             
-            save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
+            save_classifier = open("LogisticRegression_classifier.pickle","wb")
             pickle.dump(LogisticRegression_classifier, save_classifier)
             save_classifier.close()
             '''
