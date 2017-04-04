@@ -71,8 +71,23 @@ class MyListener(StreamListener):
             print("Candidats",listofcandidat)
             print("\n")
             #comparer avec classifier eco emploi ...
-            saved_classifier = open("LogisticRegression_classifier5k.pickle","rb")
+            saved_classifier = open("LogisticRegression_classifier.pickle","rb")
             LogisticRegression_classifier = pickle.load( saved_classifier)
+            save_word_features = open("word_features_lda.pickle","rb")
+            word_features = pickle.load( save_word_features)
+            features = find_features(text,word_features)
+            try :
+                print("classify :" , LogisticRegression_classifier.classify(features)) 
+            except :
+                print("classify erreur \n","Type features: ",type(features),"\n features :",features) 
+                
+            try :
+                probdisti = LogisticRegression_classifier.prob_classify(features)
+                print("prob_classify:" , probdisti)               
+                
+            except :
+                print("prob_classify erreur \n","Type features:",type(features)) 
+    
             # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
 
             #comparer avec classifier positif negatif
@@ -87,6 +102,13 @@ class MyListener(StreamListener):
         print(status)
         return True
     
+def find_features(document,word_features):
+    words = text2tokens(document,"t")
+    features = {}
+    for w in word_features:
+        features[w] = (w in words)
+    return features # Retourne un dict ou chaque mot est une clé    
+
 def format_filename(fname):
     """Convert fname into a safe string for a file name.
     Return: string
@@ -179,7 +201,7 @@ def text2tokens(text,mode):
         pass
 def foundCandidat(tokens):
     listofcandidat = []
-    melanchon = ["jlm","jean-luc","melanchon","#jlm","jlm2017","#melanchon"]
+    melanchon = ["jlm","jean-luc","melanchon","#jlm","jlm2017","#melanchon","#jlm2017"]
     hamon = ["hamon","benoit","#hamon","#hamon2017"]
     lepen = ["marine","lepen","pen","#marinelepen","#marine2017""#lepen"]
     fillon = ["francois","fillon","#fillon2017","#fillon","#francoisfillon"]
