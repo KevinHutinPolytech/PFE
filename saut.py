@@ -81,12 +81,18 @@ class MyListener(StreamListener):
             
                 
             probdisti = LogisticRegression_classifier.prob_classify(features)
-            print("prob_classify:" , probdisti)    
+            print("prob_classify:" , probdisti)   
+            dico["max"] = probdisti.max()
+            dico["labels"] = {}
             for sample in probdisti.samples():
                 print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
+                dico["labels"][sample]= probdisti.prob(sample)
+            print("Dico:",dico)    
             print("\n")
     
-            # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
+            
+            
+            
 
             #comparer avec classifier positif negatif
             # ajouter dico["sentiment"] = sentiment
