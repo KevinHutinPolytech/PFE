@@ -466,6 +466,7 @@ else :
             print ("Type : ",type(LogisticRegression_classifier))
             
             dictum = [tupl[0] for tupl in testing_set]
+            print("dictum : ",dictum)
             try :
                 print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
             except :
