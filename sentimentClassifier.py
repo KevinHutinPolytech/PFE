@@ -173,84 +173,84 @@ mode = sys.argv[1]
 if mode == '-h':
     print('Passez en argument pos.txt neg.txt')
 else :   
-            all_words = []
-            documents = []            
-            filename = sys.argv[1]
-            topic ="positif"
-            updateDocAllwords(filename,topic,documents,all_words)
+    all_words = []
+    documents = []            
+    filename = sys.argv[1]
+    topic ="positif"
+    updateDocAllwords(filename,topic,documents,all_words)
 
-            filename = sys.argv[2]
-            topic = "negatif"
-            updateDocAllwords(filename,topic,documents,all_words)
+    filename = sys.argv[2]
+    topic = "negatif"
+    updateDocAllwords(filename,topic,documents,all_words)
 
-            all_words_dict = nltk.FreqDist(all_words)          
-           
-            word_features_lda = []
-            ####################### Document 1 ##########################
-            lda_model = txt2lda(sys.argv[1])            
-            #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-            lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-            #print("lda_features : ",lda_features)
+    all_words_dict = nltk.FreqDist(all_words)          
 
-            for topic in lda_features :
-                #print("Topic ",topic[0],": ", topic) 
-                for word in topic[1] :
-                    #print("Word: ", word)
-                    word_features_lda.append(word[0])
-            
-            
-            ####################### Document 2 ##########################
-            lda_model_2 = txt2lda(sys.argv[2])            
-            #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-            lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-            #print("lda_features : ",lda_features_2)            
-            for topic in lda_features_2 :
-                #print("Topic ",topic[0],": ", topic) 
-                for word in topic[1] :
-                    #print("Word: ", word)
-                    word_features_lda.append(word[0])
-                    
-            #print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
-            save_word_features = open("word_features_sentiment_lda.pickle","wb")
-            pickle.dump(word_features_lda, save_word_features)
-            save_word_features.close()
-            
-            featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
-            #print("featuresets : ", featuresets)
+    word_features_lda = []
+    ####################### Document 1 ##########################
+    lda_model = txt2lda(sys.argv[1])            
+    #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
+    lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
+    #print("lda_features : ",lda_features)
 
-            random.shuffle(featuresets)
-            #print(len(featuresets))
+    for topic in lda_features :
+        #print("Topic ",topic[0],": ", topic) 
+        for word in topic[1] :
+            #print("Word: ", word)
+            word_features_lda.append(word[0])
 
-            testing_set = featuresets[300:]
-            training_set = featuresets[:300]
-            
-            LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
-            LogisticRegression_classifier.train(training_set)
-            print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
-            #LogisticRegression_classifier.fit(training_set)
-            #print(LogisticRegression_classifier)
-            print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 
-            print("Labels :",LogisticRegression_classifier.labels())           
-            
-            dictum = [tupl[0] for tupl in testing_set]            
-            try :
-                print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
-            except :
-                print("classify many erreur \n","Type testing_set: ",type(dictum),"\n testing_set :",dictum) 
-                
-            try :
-                print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))
-                for probdisti in LogisticRegression_classifier.prob_classify_many(dictum):
-                    list_of_samples = probdisti.samples()
-                    for sample in list_of_samples:
-                        print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
-            except :
-                print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
-    
-            
-            save_classifier = open("Sentiment_classifier.pickle","wb")
-            pickle.dump(LogisticRegression_classifier, save_classifier)
-            save_classifier.close()
+    ####################### Document 2 ##########################
+    lda_model_2 = txt2lda(sys.argv[2])            
+    #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
+    lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
+    #print("lda_features : ",lda_features_2)            
+    for topic in lda_features_2 :
+        #print("Topic ",topic[0],": ", topic) 
+        for word in topic[1] :
+            #print("Word: ", word)
+            word_features_lda.append(word[0])
+
+    #print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
+    save_word_features = open("word_features_sentiment_lda.pickle","wb")
+    pickle.dump(word_features_lda, save_word_features)
+    save_word_features.close()
+
+    featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
+    #print("featuresets : ", featuresets)
+
+    random.shuffle(featuresets)
+    #print(len(featuresets))
+
+    testing_set = featuresets[300:]
+    training_set = featuresets[:300]
+
+    LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
+    LogisticRegression_classifier.train(training_set)
+    print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
+    #LogisticRegression_classifier.fit(training_set)
+    #print(LogisticRegression_classifier)
+    print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+
+    print("Labels :",LogisticRegression_classifier.labels())           
+
+    dictum = [tupl[0] for tupl in testing_set]            
+    try :
+        print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
+    except :
+        print("classify many erreur \n","Type testing_set: ",type(dictum),"\n testing_set :",dictum) 
+
+    try :
+        print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))
+        for probdisti in LogisticRegression_classifier.prob_classify_many(dictum):
+            list_of_samples = probdisti.samples()
+            for sample in list_of_samples:
+                print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
+    except :
+        print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
+
+
+    save_classifier = open("Sentiment_classifier.pickle","wb")
+    pickle.dump(LogisticRegression_classifier, save_classifier)
+    save_classifier.close()
 
 
