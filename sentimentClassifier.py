@@ -2,7 +2,6 @@
 # coding: utf8
 from __future__ import unicode_literals
 import operator 
-import json
 import sys
 import random
 from collections import Counter
@@ -26,10 +25,7 @@ import os
 from collections import defaultdict
 from pprint import pprint  # pretty-printer
 from gensim import models ,corpora, similarities
-import tweepy
-import time
-from tweepy import Stream
-from tweepy.streaming import StreamListener
+
 
 #############################FONCTIONS####################################
 
