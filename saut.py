@@ -154,6 +154,29 @@ def text2tokens(text,mode):
         print("Problème dans la tokenisation du text")
         print("texte : ",text, "Type : ", type(text), "Mode : ",mode)
         pass
+def foundCandidat(tokens):
+    listofcandidat = []
+    melanchon = ["jlm","jean-luc","melanchon","#jlm","jlm2017"]
+    hamon = ["hamon","francois"]
+    lepen = ["marine","lepen","pen"]
+    fillon = ["francois","fillon"]
+    macron = ["macron","emmanuelle"]
+    for token in tokens :
+        if token in melanchon :
+            listofcandidat.append("melanchon")
+        if token in hamon :
+            listofcandidat.append("hamon")
+        if token in lepen :
+            listofcandidat.append("lepen")
+        if token in fillon :
+            listofcandidat.append("fillon")
+        if token in macron :
+            listofcandidat.append("macron")
+    return listofcandidat
+          
+            
+            
+    
 ######################################## MAIN ################################
 
 
@@ -174,8 +197,28 @@ else :
         for line in f:        
             m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
             if m != None :
+                dico = {}
                 text = getTweetText(line)#.decode('unicode-escape')
+                dico["text"] = text 
                 print("Text : ",text)
-                tokens = text2tokens(text,"s")
+                tokens = text2tokens(text,"t")
                 print("Tokens: \n",tokens)
+                tokens = text2tokens(text,"s")
+                print("Stems: \n",tokens)
+                print("\n")
+                # Fonction qui retourne la liste des candiadats mentionné avec une liste de tokens en entrée 
+                listofcandidat = foundCandidat(tokens)
+                dico["candidats"] = listofcandidat
+                print("Candidats",listofcandidat)
+                print("\n")
+                #comparer avec classifier eco emploi ...
+                # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
+                
+                #comparer avec classifier positif negatif
+                # ajouter dico["sentiment"] = sentiment
+                
+                # ajouter dico dans redis 
+                
+                
+                
                 
