@@ -76,26 +76,27 @@ class MyListener(StreamListener):
             save_word_features = open("word_features_lda.pickle","rb")
             word_features = pickle.load( save_word_features)
             features = find_features(text,word_features)
-            labelmaxprob = LogisticRegression_classifier.classify(features)
-            print("label 1 :" ,labelmaxprob ) 
-            
                 
             probdisti = LogisticRegression_classifier.prob_classify(features)
             print("prob_classify:" , probdisti)   
-            dico["max"] = probdisti.max()
+            dico["class"] = probdisti.max()
             dico["labels"] = {}
             for sample in probdisti.samples():
                 print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
                 dico["labels"][sample]= probdisti.prob(sample)
+                
+            saved_sentiment_classifier = open("Sentiment_classifier.pickle","rb")
+            Sentiment_classifier = pickle.load( saved_sentiment_classifier)
+            
+            features_sent = find_features(text,word_features)
+            probdisti_sent = LogisticRegression_classifier.prob_classify(features_sent)
+            print("prob_classify:" , probdisti_sent)   
+            dico["sentiment"] = probdisti_sent.max()
             print("Dico:",dico)    
             print("\n")
     
-            
-            
-            
-
-            #comparer avec classifier positif negatif
-            # ajouter dico["sentiment"] = sentiment
+            bdd = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)              
+            json2redis(dico,bdd)            
 
             # ajouter dico dans redis 
         except BaseException as e:
@@ -106,6 +107,14 @@ class MyListener(StreamListener):
         print(status)
         return True
     
+def dico2redis(dico,database):    
+         
+    classe = dico["class"]
+    sentiment = dico["sentiment"]
+    database.hset(sentiment,classe,dico)
+    print('Importation réussi')
+
+                
 def find_features(document,word_features):
     words = text2tokens(document,"t")
     features = {}
