@@ -69,24 +69,22 @@ class MyListener(StreamListener):
             listofcandidat = foundCandidat(tokens)
             dico["candidats"] = listofcandidat
             print("Candidats",listofcandidat)
-            print("\n")
+            
             #comparer avec classifier eco emploi ...
             saved_classifier = open("LogisticRegression_classifier.pickle","rb")
             LogisticRegression_classifier = pickle.load( saved_classifier)
             save_word_features = open("word_features_lda.pickle","rb")
             word_features = pickle.load( save_word_features)
             features = find_features(text,word_features)
-            try :
-                print("classify :" , LogisticRegression_classifier.classify(features)) 
-            except :
-                print("classify erreur \n","Type features: ",type(features),"\n features :",features) 
+            labelmaxprob = LogisticRegression_classifier.classify(features)
+            print("label 1 :" ,labelmaxprob ) 
+            
                 
-            try :
-                probdisti = LogisticRegression_classifier.prob_classify(features)
-                print("prob_classify:" , probdisti)               
-                
-            except :
-                print("prob_classify erreur \n","Type features:",type(features)) 
+            probdisti = LogisticRegression_classifier.prob_classify(features)
+            print("prob_classify:" , probdisti)    
+            for sample in probdisti.samples():
+                print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
+            print("\n")
     
             # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
 
