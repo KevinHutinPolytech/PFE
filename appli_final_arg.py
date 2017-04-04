@@ -434,7 +434,7 @@ else :
                     
             print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
             save_word_features = open("word_features_lda.pickle","wb")
-            pickle.dump(word_features, save_word_features)
+            pickle.dump(word_features_lda, save_word_features)
             save_word_features.close()
             
             featuresets = [(find_features(rev,word_features_lda),categorie) for (rev,categorie) in documents]# Retourne une liste de dict ou chaque mot est une clé
