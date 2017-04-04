@@ -56,6 +56,29 @@ class MyListener(StreamListener):
                 f.write(data)                
                 f.close()
                 #return True
+                
+            dico = {}
+            text = getTweetText(data)#.decode('unicode-escape')
+            dico["text"] = text 
+            print("Text : ",text)
+            tokens = text2tokens(text,"t")
+            print("Tokens: \n",tokens)
+            stems = text2tokens(text,"s")
+            print("Stems: \n",stems)                
+            # Fonction qui retourne la liste des candiadats mentionné avec une liste de tokens en entrée 
+            listofcandidat = foundCandidat(tokens)
+            dico["candidats"] = listofcandidat
+            print("Candidats",listofcandidat)
+            print("\n")
+            #comparer avec classifier eco emploi ...
+            saved_classifier = open("LogisticRegression_classifier5k.pickle","rb")
+            LogisticRegression_classifier = pickle.load( saved_classifier)
+            # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
+
+            #comparer avec classifier positif negatif
+            # ajouter dico["sentiment"] = sentiment
+
+            # ajouter dico dans redis 
         except BaseException as e:
             print("quot;Error on_data: %s&quot;" % str(e))
             return True
@@ -156,11 +179,11 @@ def text2tokens(text,mode):
         pass
 def foundCandidat(tokens):
     listofcandidat = []
-    melanchon = ["jlm","jean-luc","melanchon","#jlm","jlm2017"]
-    hamon = ["hamon","francois"]
-    lepen = ["marine","lepen","pen"]
-    fillon = ["francois","fillon"]
-    macron = ["macron","emmanuelle"]
+    melanchon = ["jlm","jean-luc","melanchon","#jlm","jlm2017","#melanchon"]
+    hamon = ["hamon","benoit","#hamon","#hamon2017"]
+    lepen = ["marine","lepen","pen","#marinelepen","#marine2017""#lepen"]
+    fillon = ["francois","fillon","#fillon2017","#fillon","#francoisfillon"]
+    macron = ["macron","emmanuelle","#macron","#macron2017","#emmanuellemacron"]
     for token in tokens :
         #print(token)
         if token in melanchon :
@@ -195,35 +218,7 @@ else :
     words = [word for word in query]
     tracker(words)
     
-    query_fname = ' '.join(query) # string
-    safe_fname = format_filename(query_fname)
-    filename = "%s.json" % safe_fname
-        
-    with open(filename,'r',encoding='utf-8',errors='replace') as f:    
-        for line in f:        
-            m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
-            if m != None :
-                dico = {}
-                text = getTweetText(line)#.decode('unicode-escape')
-                dico["text"] = text 
-                print("Text : ",text)
-                tokens = text2tokens(text,"t")
-                print("Tokens: \n",tokens)
-                stems = text2tokens(text,"s")
-                print("Stems: \n",stems)
-                print("\n")
-                # Fonction qui retourne la liste des candiadats mentionné avec une liste de tokens en entrée 
-                listofcandidat = foundCandidat(tokens)
-                dico["candidats"] = listofcandidat
-                print("Candidats",listofcandidat)
-                print("\n")
-                #comparer avec classifier eco emploi ...
-                # ajouter dico["labels"] = [label max prob 1 , label max prob 2 , label max prob 3]
-                
-                #comparer avec classifier positif negatif
-                # ajouter dico["sentiment"] = sentiment
-                
-                # ajouter dico dans redis 
+    
                 
                 
                 
