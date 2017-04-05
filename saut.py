@@ -87,16 +87,22 @@ class MyListener(StreamListener):
                 
             saved_sentiment_classifier = open("Sentiment_classifier.pickle","rb")
             Sentiment_classifier = pickle.load( saved_sentiment_classifier)
+            save_word_features_sentiment = open("word_features_sentiment_lda.pickle","rb")
+            word_features_sentiment = pickle.load( save_word_features_sentiment)
             
-            features_sent = find_features(text,word_features)
-            probdisti_sent = LogisticRegression_classifier.prob_classify(features_sent)
-            print("prob_classify:" , probdisti_sent)   
+            features_sent = find_features(text,word_features_sentiment)
+            probdisti_sent = Sentiment_classifier.prob_classify(features_sent)
+            
+            print("prob_classify:" , probdisti_sent.max())   
+            for sample in probdisti_sent.samples():
+                print("Sample: ", sample, " Prob : ",probdisti_sent.prob(sample))
+                
             dico["sentiment"] = probdisti_sent.max()
             print("Dico:",dico)    
             print("\n")
     
             bdd = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)              
-            json2redis(dico,bdd)            
+            dico2redis(dico,bdd)            
 
             # ajouter dico dans redis 
         except BaseException as e:
