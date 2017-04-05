@@ -285,6 +285,7 @@ if mode == '-h':
     print('6 : Track une chaine dans tweeter et donne une liste de dict{id_tweet : , tokens: , stems: , topic: }')
     print('7 : Compte le nombre de tweet dans un fichier json')
     print('8 : Classifier des documents')
+    print('9 : json to all tweet text')
 else :    
     mode = int(mode)    
     if mode == 1 :
@@ -494,4 +495,17 @@ else :
                 print("Pb dans le LogisticRegression_classifier")
                 print(Exception)
             '''
+    if mode == 9 :
+        if sys.argv[2] == '-h' or sys.argv[2] == '':
+            print("monfichier1.json --> all tweet text")          
+            
+        else : 
+            filename = sys.argv[2] 
+            with open(filename, 'r') as f:
+                for line in f:
+                    m = re.search(".",line) # Permet D'éviter le bug lorsqu'il y a un saut de ligne    
+                    if m != None :           
+                        text = getTweetText(line)#.decode('unicode-escape')
+                        print(text)
+                        
 
