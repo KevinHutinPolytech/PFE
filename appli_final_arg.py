@@ -378,7 +378,8 @@ else :
     if mode == 7 :#Compter le nombre de tweet dans un json
         if sys.argv[2] == '-h' or sys.argv[2] == '':
             print("monfichier.json : Nom du fichier json a traiter ")                       
-        else :             
+        else :   
+            filename = sys.argv[2]
             count = countTweetInJson(filename)
             print(count)
     if mode == 8 :#Classify
