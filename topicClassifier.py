@@ -101,32 +101,10 @@ def txt2lda(monfichier):
         corpus = [dictionary.doc2bow(text) for text in texts]
         corpora.MmCorpus.serialize('/tmp/emploi.mm', corpus)  # store to disk, for later use
         
-        
-        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=20)
         print("Génération d'un model LDA...")
+        lda = models.LdaModel(corpus, id2word=dictionary, num_topics=20)
         pprint(lda)
-        '''
-        print(lda.print_topics(num_topics=20,num_words=75))
-        print(lda.get_topic_terms(19, topn=10))
-        print(type(lda.get_topic_terms(19, topn=10)))
-        '''
         print("LDA généré")
-        
-        # Retourne une liste de tuple (idtopic , "0.02*mot1 + 0.02*mot2 + ... + 0.00*motn")
-        #print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=True))
-        
-        #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)      
-        #print("Show_Topics :lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False)",lda.show_topics(num_topics=10, num_words=10, log=False, formatted=False))
-        '''
-        doc = " Le marche de l'emploi est en chute libre, le nombre de chomeur ne cesse d'augmenter "
-        doc_bow = dictionary.doc2bow(text2tokens(doc,"s"))
-        print(lda[doc_bow]) # get topic probability distribution for a document
-        vec_lda = lda[doc_bow]
-        for i in vec_lda : 
-            topicid = i[0]
-            print(i[0])
-            print(lda.get_topic_terms(topicid, topn=10))
-        '''
         f.close()
     return lda
        
@@ -213,13 +191,13 @@ else :
 
     LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
     LogisticRegression_classifier.train(training_set)
-    print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
+    #print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
     #LogisticRegression_classifier.fit(training_set)
     #print(LogisticRegression_classifier)
     print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 
     print("Labels :",LogisticRegression_classifier.labels())           
-
+    '''
     dictum = [tupl[0] for tupl in testing_set]            
     try :
         print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
@@ -234,10 +212,10 @@ else :
                 print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
     except :
         print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
-
+    '''
 
     save_classifier = open("Topic_classifier.pickle","wb")
     pickle.dump(LogisticRegression_classifier, save_classifier)
     save_classifier.close()
-
+    print("TOPIC CLASSIFIER GENERATED")
 
