@@ -173,25 +173,27 @@ else :
     documents = []  
     i = 1
     for element in sys.argv:
-        filename = element        
-        topic = element[:-4]
-        updateDocAllwords(filename,topic,documents,all_words)
+        if len(element) != 0 :
+            filename = element        
+            topic = element[:-4]
+            updateDocAllwords(filename,topic,documents,all_words)
 
     all_words_dict = nltk.FreqDist(all_words)          
 
     word_features_lda = []
     
     for element in sys.argv:
-        lda_model = txt2lda(element)            
-        #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-        lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-        #print("lda_features : ",lda_features)
+        if len(element) != 0 :
+            lda_model = txt2lda(element)            
+            #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
+            lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
+            #print("lda_features : ",lda_features)
 
-        for topic in lda_features :
-            #print("Topic ",topic[0],": ", topic) 
-            for word in topic[1] :
-                #print("Word: ", word)
-                word_features_lda.append(word[0])
+            for topic in lda_features :
+                #print("Topic ",topic[0],": ", topic) 
+                for word in topic[1] :
+                    #print("Word: ", word)
+                    word_features_lda.append(word[0])
     
 
     #print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
