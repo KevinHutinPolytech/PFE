@@ -56,15 +56,17 @@ class MyListener(StreamListener):
             with open(self.outfile, 'a') as f:                            
                 f.write(data)                
                 f.close()
-                #return True
-                
+                #return True            
+            tweet = json.loads(data)
+            #print(type(tweet))
+            id_tweet = json.dumps(tweet['id'],ensure_ascii = False) # récupere le texte du tweet            
+            dico["id"] = id_tweet
             #######################    
             # Traitement du tweet #
             #######################
             dico = {}
             text = getTweetText(data)#.decode('unicode-escape')
-            print(data)
-            dico["id"] = data["id"]
+            
             dico["text"] = text 
             print("Text : ",text)
             tokens = text2tokens(text,"t")
