@@ -172,7 +172,8 @@ else :
     all_words = []
     documents = []  
     i = 1
-    for element in sys.argv:
+    for element in sys.argv[1:]:
+        print(element)
         if len(element) != 0 :
             filename = element        
             topic = element[:-4]
@@ -182,7 +183,7 @@ else :
 
     word_features_lda = []
     
-    for element in sys.argv:
+    for element in sys.argv[1:]:        
         if len(element) != 0 :
             lda_model = txt2lda(element)            
             #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
@@ -206,9 +207,9 @@ else :
 
     random.shuffle(featuresets)
     print("nombre de mot pertinant : ",len(featuresets))
-
-    testing_set = featuresets[len(featuresets)/2:]
-    training_set = featuresets[:len(featuresets)/2]
+    nbset = len(featuresets)/2
+    testing_set = featuresets[nbset:]
+    training_set = featuresets[:nbset]
 
     LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
     LogisticRegression_classifier.train(training_set)
