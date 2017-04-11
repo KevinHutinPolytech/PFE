@@ -167,49 +167,35 @@ def find_features(document,word_features):
 mode = sys.argv[1]
             
 if mode == '-h':
-    print('Passez en argument pos.txt neg.txt')
+    print('Passez en argument emploi.txt economie.txt sante.txt ....')
 else :   
     all_words = []
-    documents = []            
-    filename = sys.argv[1]
-    topic ="positif"
-    updateDocAllwords(filename,topic,documents,all_words)
-
-    filename = sys.argv[2]
-    topic = "negatif"
-    updateDocAllwords(filename,topic,documents,all_words)
+    documents = []  
+    i = 1
+    for element in sys.argv:
+        filename = element        
+        topic = element[:-4]
+        updateDocAllwords(filename,topic,documents,all_words)
 
     all_words_dict = nltk.FreqDist(all_words)          
 
     word_features_lda = []
-    ####################### Document 1 ##########################
-    #Génère un model Bag of word LDA positif
-    lda_model = txt2lda(sys.argv[1])            
-    #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-    lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-    #print("lda_features : ",lda_features)
+    
+    for element in sys.argv:
+        lda_model = txt2lda(element)            
+        #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
+        lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
+        #print("lda_features : ",lda_features)
 
-    for topic in lda_features :
-        #print("Topic ",topic[0],": ", topic) 
-        for word in topic[1] :
-            #print("Word: ", word)
-            word_features_lda.append(word[0])
-
-
-    ####################### Document 2 ##########################
-    #Génère un model Bag of word LDA négatif
-    lda_model_2 = txt2lda(sys.argv[2])            
-    #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
-    lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
-    #print("lda_features : ",lda_features_2)            
-    for topic in lda_features_2 :
-        #print("Topic ",topic[0],": ", topic) 
-        for word in topic[1] :
-            #print("Word: ", word)
-            word_features_lda.append(word[0])
+        for topic in lda_features :
+            #print("Topic ",topic[0],": ", topic) 
+            for word in topic[1] :
+                #print("Word: ", word)
+                word_features_lda.append(word[0])
+    
 
     #print("Word Features lda (Size :",len(word_features_lda),"): ", word_features_lda)
-    save_word_features = open("word_features_sentiment_lda.pickle","wb")
+    save_word_features = open("word_features_topic_lda.pickle","wb")
     pickle.dump(word_features_lda, save_word_features)
     save_word_features.close()
 
@@ -247,7 +233,7 @@ else :
         print("prob_classify_many erreur \n","Type testing_set:",type(dictum)) 
 
 
-    save_classifier = open("Sentiment_classifier.pickle","wb")
+    save_classifier = open("Topic_classifier.pickle","wb")
     pickle.dump(LogisticRegression_classifier, save_classifier)
     save_classifier.close()
 
