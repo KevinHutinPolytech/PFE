@@ -52,28 +52,36 @@ class MyListener(StreamListener):
         self.count = 0
     def on_data(self, data):
         try:
+            # Ajoute le tweet sous forme de dict avec toute les informations le concernant dans un fichier json
             with open(self.outfile, 'a') as f:                            
                 f.write(data)                
                 f.close()
                 #return True
                 
+            #######################    
+            # Traitement du tweet #
+            #######################
             dico = {}
             text = getTweetText(data)#.decode('unicode-escape')
+            print(data)
+            dico["id"] = data["id"]
             dico["text"] = text 
             print("Text : ",text)
             tokens = text2tokens(text,"t")
             print("Tokens: \n",tokens)
             stems = text2tokens(text,"s")
             print("Stems: \n",stems)                
-            # Fonction qui retourne la liste des candiadats mentionné avec une liste de tokens en entrée 
+            # Fonction qui retourne la liste des candidats mentionné avec une liste de tokens en entrée 
             listofcandidat = foundCandidat(tokens)
             dico["candidats"] = listofcandidat
             print("Candidats",listofcandidat)
             
-            #comparer avec classifier eco emploi ...
-            saved_classifier = open("LogisticRegression_classifier.pickle","rb")
+            ###########################    
+            # Classification du tweet #
+            ###########################
+            saved_classifier = open("Topic_classifier.pickle","rb")
             LogisticRegression_classifier = pickle.load( saved_classifier)
-            save_word_features = open("word_features_lda.pickle","rb")
+            save_word_features = open("word_features_topic_lda.pickle","rb")
             word_features = pickle.load( save_word_features)
             features = find_features(text,word_features)
                 
@@ -84,7 +92,10 @@ class MyListener(StreamListener):
             for sample in probdisti.samples():
                 print("Sample: ", sample, " Prob : ",probdisti.prob(sample))
                 dico["labels"][sample]= probdisti.prob(sample)
-                
+            
+            #########################    
+            # Analyse de sentiment  #
+            #########################
             saved_sentiment_classifier = open("Sentiment_classifier.pickle","rb")
             Sentiment_classifier = pickle.load( saved_sentiment_classifier)
             save_word_features_sentiment = open("word_features_sentiment_lda.pickle","rb")
@@ -100,11 +111,14 @@ class MyListener(StreamListener):
             dico["sentiment"] = probdisti_sent.max()
             print("Dico:",dico)    
             print("\n")
-    
+            
+            #######################    
+            # Stockage dans redis #
+            #######################
             bdd = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)              
             dico2redis(dico,bdd)            
 
-            # ajouter dico dans redis 
+            
         except BaseException as e:
             print("quot;Error on_data: %s&quot;" % str(e))
             return True
@@ -145,6 +159,7 @@ def convert_valid(one_char):
         return ''
     
 def tracker(query):
+    # Nom du fichier 
     query_fname = ' '.join(query) # string
     twitter_stream = Stream(auth, MyListener(query_fname))
     twitter_stream.filter(track=query, async=True)
