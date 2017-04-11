@@ -132,9 +132,9 @@ class MyListener(StreamListener):
     
 def dico2redis(dico,database):    
          
-    classe = dico["class"]
+    id_tweet = dico["id"]
     sentiment = dico["sentiment"]
-    database.hset(sentiment,classe,dico)
+    database.hset(sentiment,id_tweet,dico)
     print('Importation réussi')
 
                 
