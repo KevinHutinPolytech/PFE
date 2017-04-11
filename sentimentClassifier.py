@@ -205,16 +205,16 @@ else :
     #print("sklearn classifier créer en LogisticRegression : \n",LogisticRegression_classifier)
     #LogisticRegression_classifier.fit(training_set)
     #print(LogisticRegression_classifier)
-    #print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+    print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
 
-    #print("Labels :",LogisticRegression_classifier.labels())           
-
+    print("Labels :",LogisticRegression_classifier.labels())           
+    '''
     dictum = [tupl[0] for tupl in testing_set]            
     try :
         print("classify many:" , LogisticRegression_classifier.classify_many(dictum)) 
     except :
         print("classify many erreur \n","Type testing_set: ",type(dictum),"\n testing_set :",dictum) 
-
+    '''
     '''try :
         print("prob_classify_many:" , LogisticRegression_classifier.prob_classify_many(dictum))
         for probdisti in LogisticRegression_classifier.prob_classify_many(dictum):
@@ -228,5 +228,5 @@ else :
     save_classifier = open("Sentiment_classifier.pickle","wb")
     pickle.dump(LogisticRegression_classifier, save_classifier)
     save_classifier.close()
-
+    print("SENTIMENT CLASSIFIER GENERATED") 
 
