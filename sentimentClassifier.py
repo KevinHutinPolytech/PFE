@@ -147,7 +147,7 @@ def updateDocAllwords(filename,topic,documents,allwords):
                 for token in text :
                     if frequency[token] > 1:
                         allwords.append(token)
-            save_documents = open("documents.pickle","wb")
+            save_documents = open("documents.pickle","wb") 
             pickle.dump(documents, save_documents)
             save_documents.close()
     except: 
@@ -183,6 +183,7 @@ else :
 
     word_features_lda = []
     ####################### Document 1 ##########################
+    #Génère un model Bag of word LDA positif
     lda_model = txt2lda(sys.argv[1])            
     #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
     lda_features = lda_model.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
@@ -196,6 +197,7 @@ else :
 
 
     ####################### Document 2 ##########################
+    #Génère un model Bag of word LDA négatif
     lda_model_2 = txt2lda(sys.argv[2])            
     #retourne list de tuple (idtopic, [liste2]) où [liste2] est une liste de tuple (word, probability)
     lda_features_2 = lda_model_2.show_topics(num_topics=20, num_words=15, log=False, formatted=False)
@@ -215,10 +217,10 @@ else :
     #print("featuresets : ", featuresets)
 
     random.shuffle(featuresets)
-    #print(len(featuresets))
-
-    testing_set = featuresets[300:]
-    training_set = featuresets[:300]
+    print("nombre de mot pertinant : ",len(featuresets))
+    nbset = int(len(featuresets)/2)
+    testing_set = featuresets[nbset:]
+    training_set = featuresets[:nbset]
 
     LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
     LogisticRegression_classifier.train(training_set)
