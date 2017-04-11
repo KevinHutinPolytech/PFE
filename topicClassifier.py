@@ -207,7 +207,7 @@ else :
 
     random.shuffle(featuresets)
     print("nombre de mot pertinant : ",len(featuresets))
-    nbset = len(featuresets)/2
+    nbset = int(len(featuresets)/2)
     testing_set = featuresets[nbset:]
     training_set = featuresets[:nbset]
 
